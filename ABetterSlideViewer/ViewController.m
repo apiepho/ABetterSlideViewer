@@ -26,7 +26,15 @@ NSInteger currentIndex = -1;
     [super viewDidLoad];
 
     // Do any additional setup after loading the view.
-
+    [self.view setWantsLayer: YES];
+    [self.view.layer setBackgroundColor: [NSColor blackColor].CGColor];
+    [self.sourcePath setBackgroundColor:[NSColor blackColor]];
+    [self.sourcePath setTextColor:[NSColor grayColor]];
+    [self.destinationPath setBackgroundColor:[NSColor blackColor]];
+    [self.destinationPath setTextColor:[NSColor grayColor]];
+    [self.imageView setWantsLayer: YES];
+    [self.imageView.layer setBackgroundColor: [NSColor blackColor].CGColor];
+    
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSString *keyValue = [prefs stringForKey:@"keyForSourceTopPath"];
     if (keyValue != nil) {

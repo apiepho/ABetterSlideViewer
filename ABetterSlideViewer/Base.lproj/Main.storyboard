@@ -779,7 +779,7 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D3G-Yb-zCo">
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D3G-Yb-zCo">
                                 <rect key="frame" x="3" y="33" width="640" height="360"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="groove" id="QBA-PH-HyM"/>
                             </imageView>
@@ -792,6 +792,8 @@
                             <constraint firstAttribute="bottom" secondItem="akJ-xp-fMJ" secondAttribute="bottom" id="MND-87-Ix1"/>
                             <constraint firstAttribute="bottom" secondItem="ogg-iO-RoX" secondAttribute="bottom" id="Nf7-n2-kKM"/>
                             <constraint firstAttribute="bottom" secondItem="2JI-vr-KxK" secondAttribute="bottom" constant="1" id="RkG-ib-ToN"/>
+                            <constraint firstItem="D3G-Yb-zCo" firstAttribute="top" secondItem="XED-xu-Xjl" secondAttribute="bottom" constant="15" id="VVo-lB-kwX"/>
+                            <constraint firstItem="2JI-vr-KxK" firstAttribute="top" secondItem="D3G-Yb-zCo" secondAttribute="bottom" constant="13" id="ZPd-HO-aXZ"/>
                             <constraint firstAttribute="bottom" secondItem="8Jf-8m-3bQ" secondAttribute="bottom" id="Zmt-s2-BHs"/>
                             <constraint firstItem="XED-xu-Xjl" firstAttribute="top" secondItem="yfV-A1-TV3" secondAttribute="bottom" constant="3" id="bP9-0B-P2l"/>
                             <constraint firstItem="yfV-A1-TV3" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="edT-wP-NEe"/>
@@ -799,6 +801,7 @@
                             <constraint firstAttribute="bottom" secondItem="pXT-Ko-5IL" secondAttribute="bottom" id="qgc-4I-CWx"/>
                             <constraint firstAttribute="bottom" secondItem="072-hx-HlW" secondAttribute="bottom" id="tr1-Od-BJM"/>
                             <constraint firstAttribute="bottom" secondItem="CCB-Q8-TPm" secondAttribute="bottom" id="xfb-cb-rfo"/>
+                            <constraint firstItem="D3G-Yb-zCo" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="6" id="zIY-GU-Lnd"/>
                         </constraints>
                     </view>
                     <connections>
