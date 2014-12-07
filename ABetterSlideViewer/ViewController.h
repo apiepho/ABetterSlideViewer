@@ -10,6 +10,7 @@
 
 @interface ViewController : NSViewController
 
-
+// capture the keyup
+- (void)keyUp:(NSEvent *)theEvent;
 @end
 
