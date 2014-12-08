@@ -708,6 +708,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="sourceButton:" target="XfG-lQ-9wD" id="MQe-Sz-wbY"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="awM-gd-C7V">
                                 <rect key="frame" x="32" y="-7" width="49" height="32"/>
@@ -715,6 +718,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="destinationButton:" target="XfG-lQ-9wD" id="IEv-z3-eEI"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="peN-u6-mGI">
                                 <rect key="frame" x="110" y="-7" width="57" height="32"/>
@@ -722,6 +728,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="nextButton:" target="XfG-lQ-9wD" id="SKG-GU-ZEy"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CCB-Q8-TPm">
                                 <rect key="frame" x="160" y="-7" width="57" height="32"/>
@@ -729,6 +738,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="previousButton:" target="XfG-lQ-9wD" id="7qf-5V-rbU"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pXT-Ko-5IL">
                                 <rect key="frame" x="210" y="-7" width="60" height="32"/>
@@ -736,6 +748,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="nextDirectoryButton:" target="XfG-lQ-9wD" id="5Os-Ko-Czr"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="akJ-xp-fMJ">
                                 <rect key="frame" x="259" y="-7" width="60" height="32"/>
@@ -743,6 +758,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="previousDirectoryButton:" target="XfG-lQ-9wD" id="HRP-F5-43n"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ijc-hJ-mna">
                                 <rect key="frame" x="314" y="-7" width="48" height="32"/>
@@ -750,6 +768,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="copyButton:" target="XfG-lQ-9wD" id="7kp-kL-DH9"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="072-hx-HlW">
                                 <rect key="frame" x="358" y="-7" width="48" height="32"/>
@@ -757,6 +778,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="undoButton:" target="XfG-lQ-9wD" id="8MO-AU-BQa"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ntv-js-C9q">
                                 <rect key="frame" x="399" y="-7" width="45" height="32"/>
@@ -764,6 +788,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="toggleButtonsButton:" target="XfG-lQ-9wD" id="ypd-KF-NqW"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ogg-iO-RoX">
                                 <rect key="frame" x="438" y="-7" width="48" height="32"/>
@@ -771,6 +798,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="helpButton:" target="XfG-lQ-9wD" id="dzh-hr-qGt"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L9Z-pC-pPJ">
                                 <rect key="frame" x="71" y="-7" width="47" height="32"/>
@@ -778,6 +808,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="playPauseButton:" target="XfG-lQ-9wD" id="CXw-8J-JJb"/>
+                                </connections>
                             </button>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D3G-Yb-zCo">
                                 <rect key="frame" x="3" y="33" width="640" height="360"/>

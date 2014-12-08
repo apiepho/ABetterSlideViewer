@@ -70,7 +70,59 @@ NSInteger currentIndex = -1;
     [self.keyCaptureTextField setStringValue:@""]; // clear
 }
 
+- (void) underConstruction {
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert setMessageText:@"Under Construction."];
+    [alert runModal];
+}
 
+- (IBAction)sourceButton:(id)sender {
+    [self pickSource];
+}
+
+- (IBAction)destinationButton:(id)sender {
+    [self underConstruction];
+}
+
+- (IBAction)playPauseButton:(id)sender {
+    [self underConstruction];
+}
+
+- (IBAction)nextButton:(id)sender {
+    [self nextImage];
+}
+
+- (IBAction)previousButton:(id)sender {
+    [self previousImage];
+}
+
+- (IBAction)nextDirectoryButton:(id)sender {
+    [self underConstruction];
+}
+
+- (IBAction)previousDirectoryButton:(id)sender {
+    [self underConstruction];
+}
+
+- (IBAction)copyButton:(id)sender {
+    [self underConstruction];
+}
+
+- (IBAction)undoButton:(id)sender {
+    [self underConstruction];
+}
+
+- (IBAction)toggleButtonsButton:(id)sender {
+    [self underConstruction];
+}
+
+- (IBAction)helpButton:(id)sender {
+    [self underConstruction];
+}
+
+
+#pragma mark "Internal"
+// TODO: split these out to another class?
 
 - (void) pickSource {
     NSOpenPanel* panel = [NSOpenPanel openPanel];
@@ -143,3 +195,32 @@ NSInteger currentIndex = -1;
 }
 
 @end
+
+
+// TODO - UI OP
+// - determine all keys and add to key capture
+// - finish any buttons
+// - toggle buttons feature
+// - button tool tips
+// - key capture over other components
+// - try first responder again???
+// - try menu items again???
+
+// TODO - FEATURES
+// - >>|
+// - |<<
+// - impelement play pause
+// - destination
+// - copy
+// - undo
+
+// TODO - UI LOOK
+// - black behind image
+// - images for buttons
+// - icons for app
+
+// - installer
+// - sign app
+
+
+
