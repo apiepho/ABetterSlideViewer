@@ -13,6 +13,19 @@
 @property (strong) IBOutlet NSTextField *sourcePath;
 @property (strong) IBOutlet NSTextField *destinationPath;
 @property (strong) IBOutlet NSImageView *imageView;
+
+// TODO: should add these to a panel or another view so who set can be hidden
+@property (strong) IBOutlet NSButton *sourceButton;
+@property (strong) IBOutlet NSButton *destinationButton;
+@property (strong) IBOutlet NSButton *playPauseButton;
+@property (strong) IBOutlet NSButton *nextButton;
+@property (strong) IBOutlet NSButton *previousButton;
+@property (strong) IBOutlet NSButton *nextFolderButton;
+@property (strong) IBOutlet NSButton *previousFolderButton;
+@property (strong) IBOutlet NSButton *moveItButton;
+@property (strong) IBOutlet NSButton *undoImageButton;
+@property (strong) IBOutlet NSButton *toggleButton;
+@property (strong) IBOutlet NSButton *helpButton;
 @end
 
 @implementation ViewController
@@ -51,11 +64,14 @@ NSInteger currentIndex = -1;
 
 // Capture any keyUp events and interpret as view options
 - (void)keyUp:(NSEvent *)theEvent {
-    // TODO: really should use some #define for keycodes instead of magic numbers
+    // TODO: should use some #define for keycodes instead of magic numbers
     NSLog(@"%d",[theEvent keyCode]);
     switch ([theEvent keyCode]) {
         case 1: // s, source
             [self pickSource];
+            break;
+        case 2: // d, destination
+            NSLog(@"d");
             break;
         case 124: // > next
             [self nextImage];
@@ -63,7 +79,31 @@ NSInteger currentIndex = -1;
         case 123: // < prev
             [self previousImage];
             break;
-           
+        case 45: // n, next folder
+            NSLog(@"n");
+            break;
+        case 35: // p, previous folder
+            NSLog(@"p");
+            break;
+        case 49: // space, copy
+            NSLog(@"space");
+            break;
+        case 8: // c, copy
+            NSLog(@"c");
+            break;
+        case 32: // u, undo
+            NSLog(@"u");
+            break;
+        case 17: // t, toggle buttons
+            [self hideShowButtons];
+            break;
+        case 4: // h, help
+            NSLog(@"h");
+            break;
+        case 44: // / or ?, help
+            NSLog(@"?");
+            break;
+        
         default:
             break;
     }
@@ -81,6 +121,7 @@ NSInteger currentIndex = -1;
 }
 
 - (IBAction)destinationButton:(id)sender {
+    // TODO
     [self underConstruction];
 }
 
@@ -97,28 +138,50 @@ NSInteger currentIndex = -1;
 }
 
 - (IBAction)nextDirectoryButton:(id)sender {
+    // TODO
     [self underConstruction];
 }
 
 - (IBAction)previousDirectoryButton:(id)sender {
+    // TODO
     [self underConstruction];
 }
 
 - (IBAction)copyButton:(id)sender {
+    // TODO
     [self underConstruction];
 }
 
 - (IBAction)undoButton:(id)sender {
+    // TODO
     [self underConstruction];
 }
 
 - (IBAction)toggleButtonsButton:(id)sender {
-    [self underConstruction];
+    [self hideShowButtons];
 }
 
 - (IBAction)helpButton:(id)sender {
+    // TODO
     [self underConstruction];
 }
+
+- (void)hideShowButtons {
+    bool state = !self.sourceButton.hidden;
+    
+    self.sourceButton.hidden            = state;
+    self.destinationButton.hidden       = state;
+    self.playPauseButton.hidden         = state;
+    self.nextButton.hidden              = state;
+    self.previousButton.hidden          = state;
+    self.nextFolderButton.hidden        = state;
+    self.previousFolderButton.hidden    = state;
+    self.moveItButton.hidden            = state;
+    self.undoImageButton.hidden         = state;
+    self.toggleButton.hidden            = state;
+    self.helpButton.hidden              = state;
+}
+
 
 
 #pragma mark "Internal"
@@ -175,6 +238,7 @@ NSInteger currentIndex = -1;
     NSString *name = sourcePaths[currentIndex];
     self.sourcePath.stringValue = name;
     NSImage *image = [[NSImage alloc] initWithContentsOfFile:name];
+// TODO: doesn't seem to change things    [image setBackgroundColor:[NSColor blackColor]];
     [self.imageView setImage: image];
 }
 
@@ -198,13 +262,12 @@ NSInteger currentIndex = -1;
 
 
 // TODO - UI OP
-// - determine all keys and add to key capture
-// - finish any buttons
-// - toggle buttons feature
 // - button tool tips
 // - key capture over other components
 // - try first responder again???
 // - try menu items again???
+// - fix stretch
+// - use cocoa toolbar for buttons
 
 // TODO - FEATURES
 // - >>|
