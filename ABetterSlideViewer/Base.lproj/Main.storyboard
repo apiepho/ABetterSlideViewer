@@ -715,6 +715,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="nextButton:" target="XfG-lQ-9wD" id="VsJ-Ct-drD"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CCB-Q8-TPm">
                                 <rect key="frame" x="160" y="-7" width="57" height="32"/>
@@ -797,9 +800,9 @@
                                 <rect key="frame" x="3" y="33" width="640" height="360"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="groove" id="QBA-PH-HyM"/>
                             </imageView>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Jf-8m-3bQ">
+                            <button toolTip="Pick source" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Jf-8m-3bQ">
                                 <rect key="frame" x="-6" y="-7" width="47" height="32"/>
-                                <buttonCell key="cell" type="push" title="s" bezelStyle="rounded" imagePosition="left" alignment="center" borderStyle="border" toolTip="Pick source directory" imageScaling="proportionallyDown" inset="2" id="hXs-QH-m7E">
+                                <buttonCell key="cell" type="push" title="s" bezelStyle="rounded" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hXs-QH-m7E">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -860,7 +863,6 @@
                         <outlet property="sourceButton" destination="8Jf-8m-3bQ" id="BwI-eB-5ii"/>
                         <outlet property="sourcePath" destination="yfV-A1-TV3" id="PJL-IU-48d"/>
                         <outlet property="toggleButton" destination="ntv-js-C9q" id="6Xs-zT-3uQ"/>
-                        <outlet property="undoButton" destination="072-hx-HlW" id="mrz-rc-fyw"/>
                         <outlet property="undoImageButton" destination="072-hx-HlW" id="E2J-hG-uVM"/>
                     </connections>
                 </viewController>

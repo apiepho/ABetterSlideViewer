@@ -47,7 +47,19 @@ NSInteger currentIndex = -1;
     [self.destinationPath setTextColor:[NSColor grayColor]];
     [self.imageView setWantsLayer: YES];
     [self.imageView.layer setBackgroundColor: [NSColor blackColor].CGColor];
-    
+ 
+    self.sourceButton.toolTip           = @"pick source directory";
+    self.destinationButton.toolTip      = @"pick destination directory";
+    self.playPauseButton.toolTip        = @"toggle play/pause";
+    self.nextButton.toolTip             = @"next image";
+    self.previousButton.toolTip         = @"previous image";
+    self.nextFolderButton.toolTip       = @"move to next folder of images";
+    self.previousFolderButton.toolTip   = @"move to previous folder of images";
+    self.moveItButton.toolTip           = @"copy image from source to destination";
+    self.undoImageButton.toolTip        = @"undo last copy";
+    self.toggleButton.toolTip           = @"toggle hide/show of buttons";
+    self.helpButton.toolTip             = @"display help";
+
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSString *keyValue = [prefs stringForKey:@"keyForSourceTopPath"];
     if (keyValue != nil) {
@@ -262,7 +274,6 @@ NSInteger currentIndex = -1;
 
 
 // TODO - UI OP
-// - button tool tips
 // - key capture over other components
 // - try first responder again???
 // - try menu items again???
