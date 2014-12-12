@@ -34,6 +34,10 @@ NSString *sourceTopPath;
 NSMutableArray *sourcePaths;
 NSInteger currentIndex = -1;
 
+float playInterval = 2.0f;
+NSTimer *playTimer = nil;
+bool playRunning = false;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -85,11 +89,20 @@ NSInteger currentIndex = -1;
         case 2: // d, destination
             NSLog(@"d");
             break;
+        case 125: // v, play/pause
+            [self playPause];
+            break;
         case 124: // > next
+            // pause, op, play to keep timing of play in sync
+            [self pause];
             [self nextImage];
+            [self play];
             break;
         case 123: // < prev
+            // pause, op, play to keep timing of play in sync
+            [self pause];
             [self previousImage];
+            [self play];
             break;
         case 45: // n, next folder
             NSLog(@"n");
@@ -138,15 +151,21 @@ NSInteger currentIndex = -1;
 }
 
 - (IBAction)playPauseButton:(id)sender {
-    [self underConstruction];
+    [self playPause];
 }
 
 - (IBAction)nextButton:(id)sender {
+    // pause, op, play to keep timing of play in sync
+    [self pause];
     [self nextImage];
+    [self play];
 }
 
 - (IBAction)previousButton:(id)sender {
+    // pause, op, play to keep timing of play in sync
+    [self pause];
     [self previousImage];
+    [self play];
 }
 
 - (IBAction)nextDirectoryButton:(id)sender {
@@ -194,7 +213,32 @@ NSInteger currentIndex = -1;
     self.helpButton.hidden              = state;
 }
 
+- (void) play {
+    if (playRunning && playTimer == nil) {
+        playTimer = [NSTimer scheduledTimerWithTimeInterval:playInterval
+                                                     target:self
+                                                   selector:@selector(nextImage)
+                                                   userInfo:nil
+                                                    repeats:YES];
+    }
+}
 
+- (void) pause {
+    if (playRunning && playTimer != nil) {
+        [playTimer invalidate];
+        playTimer = nil;
+    }
+}
+
+- (void) playPause {
+    if (playTimer == nil) {
+        playRunning = true;
+        [self play];
+    } else {
+        [self pause];
+        playRunning = false;
+    }
+}
 
 #pragma mark "Internal"
 // TODO: split these out to another class?
@@ -269,6 +313,7 @@ NSInteger currentIndex = -1;
         currentIndex = sourcePaths.count-1;
     [self updateImage];
 }
+
 
 @end
 
