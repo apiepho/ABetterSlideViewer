@@ -105,10 +105,16 @@ bool playRunning = false;
             [self play];
             break;
         case 45: // n, next folder
-            NSLog(@"n");
+            // pause, op, play to keep timing of play in sync
+            [self pause];
+            [self nextDirectory];
+            [self play];
             break;
         case 35: // p, previous folder
-            NSLog(@"p");
+            // pause, op, play to keep timing of play in sync
+            [self pause];
+            [self previousDirectory];
+            [self play];
             break;
         case 49: // space, copy
             NSLog(@"space");
@@ -169,13 +175,17 @@ bool playRunning = false;
 }
 
 - (IBAction)nextDirectoryButton:(id)sender {
-    // TODO
-    [self underConstruction];
+    // pause, op, play to keep timing of play in sync
+    [self pause];
+    [self nextDirectory];
+    [self play];
 }
 
 - (IBAction)previousDirectoryButton:(id)sender {
-    // TODO
-    [self underConstruction];
+    // pause, op, play to keep timing of play in sync
+    [self pause];
+    [self previousDirectory];
+    [self play];
 }
 
 - (IBAction)copyButton:(id)sender {
@@ -314,6 +324,67 @@ bool playRunning = false;
     [self updateImage];
 }
 
+- (void) nextDirectory {
+    if (currentIndex == -1) return;
+    if (sourcePaths.count < 2) return;
+
+    bool done = false;
+    NSInteger thisIndex = currentIndex;
+    while (!done) {
+        // set next index
+        NSInteger nextIndex = thisIndex + 1;
+        if (nextIndex >= sourcePaths.count)
+            nextIndex = 0;
+        
+        // get base path
+        NSString *thisDir = [sourcePaths[thisIndex] stringByDeletingLastPathComponent];
+        NSString *nextDir = [sourcePaths[nextIndex] stringByDeletingLastPathComponent];
+        
+        if (![thisDir isEqualToString:nextDir]) {
+            // found a different directory
+            currentIndex = nextIndex;
+            done = true;
+        } else if (thisIndex == sourcePaths.count-1) {
+            // have checked all paths
+            done = true;
+        } else {
+            // move to next directory
+            thisIndex++;
+        }
+    }
+    [self updateImage];
+}
+
+- (void) previousDirectory {
+    if (currentIndex == -1) return;
+    if (sourcePaths.count < 2) return;
+    
+    bool done = false;
+    NSInteger thisIndex = currentIndex;
+    while (!done) {
+        // set next index
+        NSInteger nextIndex = thisIndex - 1;
+        if (nextIndex < 0)
+            nextIndex = sourcePaths.count-1;
+       
+        // get base path
+        NSString *thisDir = [sourcePaths[thisIndex] stringByDeletingLastPathComponent];
+        NSString *nextDir = [sourcePaths[nextIndex] stringByDeletingLastPathComponent];
+        
+        if (![thisDir isEqualToString:nextDir]) {
+            // found a different directory
+            currentIndex = nextIndex;
+            done = true;
+        } else if (thisIndex == 0) {
+            // have checked all paths
+            done = true;
+        } else {
+            // move to next directory
+            thisIndex--;
+        }
+    }
+    [self updateImage];
+}
 
 @end
 
@@ -326,9 +397,6 @@ bool playRunning = false;
 // - use cocoa toolbar for buttons
 
 // TODO - FEATURES
-// - >>|
-// - |<<
-// - impelement play pause
 // - destination
 // - copy
 // - undo
