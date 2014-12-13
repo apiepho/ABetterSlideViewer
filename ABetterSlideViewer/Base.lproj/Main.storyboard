@@ -749,15 +749,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="647" height="442"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2JI-vr-KxK">
-                                <rect key="frame" x="482" y="1" width="55" height="22"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="55" id="XsS-rg-Gkk"/>
-                                </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="ZtO-IW-gP0">
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2JI-vr-KxK">
+                                <rect key="frame" x="0.0" y="2" width="191" height="20"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" id="ZtO-IW-gP0">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" white="0.66666666666666663" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yfV-A1-TV3">
@@ -776,8 +773,8 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D3G-Yb-zCo">
-                                <rect key="frame" x="3" y="33" width="640" height="360"/>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D3G-Yb-zCo">
+                                <rect key="frame" x="3" y="10" width="641" height="381"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="groove" id="QBA-PH-HyM"/>
                             </imageView>
                         </subviews>
@@ -786,10 +783,10 @@
                             <constraint firstItem="D3G-Yb-zCo" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="6cg-Ue-6lF"/>
                             <constraint firstItem="D3G-Yb-zCo" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="6" id="CKt-pj-dNd"/>
                             <constraint firstItem="XED-xu-Xjl" firstAttribute="leading" secondItem="yfV-A1-TV3" secondAttribute="leading" id="FGv-u7-a7P"/>
-                            <constraint firstItem="2JI-vr-KxK" firstAttribute="top" secondItem="D3G-Yb-zCo" secondAttribute="bottom" constant="13" id="PWG-Kr-Xaa"/>
                             <constraint firstItem="D3G-Yb-zCo" firstAttribute="top" secondItem="XED-xu-Xjl" secondAttribute="bottom" constant="15" id="SDN-Ha-cSH"/>
                             <constraint firstItem="XED-xu-Xjl" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" symbolic="YES" id="dQ6-oi-Wf8"/>
                             <constraint firstItem="yfV-A1-TV3" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="rgg-3V-Ew2"/>
+                            <constraint firstAttribute="bottom" secondItem="D3G-Yb-zCo" secondAttribute="bottom" constant="13" id="y4h-tM-BFg"/>
                             <constraint firstItem="yfV-A1-TV3" firstAttribute="trailing" secondItem="XED-xu-Xjl" secondAttribute="trailing" id="zZe-3D-6SE"/>
                         </constraints>
                     </view>
