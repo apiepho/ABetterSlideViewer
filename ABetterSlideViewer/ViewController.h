@@ -12,5 +12,8 @@
 
 // capture the keyup
 - (void)keyUp:(NSEvent *)theEvent;
+
+// capture toolbar actions
+- (IBAction)toolbarAction:(id)sender;
 @end
 

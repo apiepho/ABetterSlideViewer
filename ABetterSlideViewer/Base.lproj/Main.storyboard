@@ -655,6 +655,83 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <toolbar key="toolbar" implicitIdentifier="3F2F6FE9-1A79-4D27-96F8-8900C414903D" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="small" id="3W7-9T-5Ua">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="gPk-T2-cqk"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="Lbv-OL-lbQ"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="3WG-JR-ZGG"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarCustomizeToolbarItem" id="ayB-19-yDY"/>
+                                <toolbarItem implicitItemIdentifier="D26FAB49-EE55-4F08-8FA9-FAF52B9EC8F3" label="source" paletteLabel="source" toolTip="Pick source directory" tag="1" image="NSFolder" id="492-5E-0K4">
+                                    <connections>
+                                        <action selector="toolbarAction:" target="Oky-zY-oP4" id="ooS-cW-BWm"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="076E7F88-4740-41EE-BF98-8C48ED8F17D2" label="destination" paletteLabel="destination" toolTip="Pick destination directory" tag="2" image="NSFolder" id="g3M-qK-Dkb">
+                                    <connections>
+                                        <action selector="toolbarAction:" target="Oky-zY-oP4" id="bc0-sf-iMU"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="1EDB5A94-789E-4366-AE90-6D739C0890A4" label="play" paletteLabel="play" toolTip="play/pause slideshow" tag="3" image="NSStatusNone" id="PPq-Nf-Xai">
+                                    <connections>
+                                        <action selector="toolbarAction:" target="Oky-zY-oP4" id="lCb-hT-svE"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="4EDDDF5A-C9DE-481F-A534-A342D22A9CF4" label="next" paletteLabel="next" toolTip="next image" tag="4" image="NSGoRightTemplate" id="F0x-Z7-0g4">
+                                    <connections>
+                                        <action selector="toolbarAction:" target="Oky-zY-oP4" id="BgC-H9-XiS"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="145AD12D-8359-4BC1-B32B-D0C4880DAC84" label="previous" paletteLabel="previous" toolTip="previous image" tag="5" image="NSGoLeftTemplate" id="sgW-QJ-QOU">
+                                    <connections>
+                                        <action selector="toolbarAction:" target="Oky-zY-oP4" id="W9T-pT-am4"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="DC77C175-2CDA-43CF-AB92-95F92559D9EA" label="prev folder" paletteLabel="prev folder" toolTip="previous folder" tag="6" image="NSRefreshFreestandingTemplate" id="sEd-SS-Tss">
+                                    <connections>
+                                        <action selector="toolbarAction:" target="Oky-zY-oP4" id="TbU-Dx-qLB"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="8B4F465D-4A6C-4409-A4EA-7B03F7FDBF23" label="next folder" paletteLabel="next folder" toolTip="next folder" tag="7" image="NSFollowLinkFreestandingTemplate" id="kjc-ea-OCE">
+                                    <connections>
+                                        <action selector="toolbarAction:" target="Oky-zY-oP4" id="AJh-VY-2lE"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="8FC2704C-810A-43C2-BA01-A5D4F977FC66" label="copy" paletteLabel="copy" toolTip="copy image" tag="8" image="NSAddTemplate" id="Pmk-dw-hSs">
+                                    <connections>
+                                        <action selector="toolbarAction:" target="Oky-zY-oP4" id="3U6-uS-8xg"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="03C42634-4015-47FE-AB2B-C46E13FDFE48" label="undo" paletteLabel="undo" toolTip="undo copy" tag="9" image="NSRemoveTemplate" id="aGb-RW-4tL">
+                                    <connections>
+                                        <action selector="toolbarAction:" target="Oky-zY-oP4" id="WBj-GL-3Le"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="AF822ADC-E84A-4306-9E21-B74B3ABD8597" label="help" paletteLabel="help" toolTip="display help" tag="10" image="NSInfo" id="XXo-vw-hT2">
+                                    <connections>
+                                        <action selector="toolbarAction:" target="Oky-zY-oP4" id="rpV-Vz-jtp"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="3A4205EA-6B27-4050-86EB-C2EBD737C737" label="pause" paletteLabel="pause" tag="11" image="NSStatusAvailable" id="hKD-Qs-hpa">
+                                    <connections>
+                                        <action selector="toolbarAction:" target="Oky-zY-oP4" id="p2E-u8-tjc"/>
+                                    </connections>
+                                </toolbarItem>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="492-5E-0K4"/>
+                                <toolbarItem reference="g3M-qK-Dkb"/>
+                                <toolbarItem reference="PPq-Nf-Xai"/>
+                                <toolbarItem reference="F0x-Z7-0g4"/>
+                                <toolbarItem reference="sgW-QJ-QOU"/>
+                                <toolbarItem reference="kjc-ea-OCE"/>
+                                <toolbarItem reference="sEd-SS-Tss"/>
+                                <toolbarItem reference="Pmk-dw-hSs"/>
+                                <toolbarItem reference="aGb-RW-4tL"/>
+                                <toolbarItem reference="3WG-JR-ZGG"/>
+                                <toolbarItem reference="XXo-vw-hT2"/>
+                                <toolbarItem reference="ayB-19-yDY"/>
+                            </defaultToolbarItems>
+                        </toolbar>
                     </window>
                     <connections>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
@@ -672,7 +749,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="647" height="442"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2JI-vr-KxK">
+                            <textField verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2JI-vr-KxK">
                                 <rect key="frame" x="482" y="1" width="55" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="55" id="XsS-rg-Gkk"/>
@@ -683,7 +760,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yfV-A1-TV3">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yfV-A1-TV3">
                                 <rect key="frame" x="18" y="425" width="444" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(picture path)" id="YVc-Lw-3kj">
                                     <font key="font" metaFont="system"/>
@@ -691,7 +768,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XED-xu-Xjl">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XED-xu-Xjl">
                                 <rect key="frame" x="18" y="405" width="444" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(desitnation path)" id="zB8-8B-icn">
                                     <font key="font" metaFont="system"/>
@@ -699,171 +776,28 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="awM-gd-C7V">
-                                <rect key="frame" x="32" y="-7" width="49" height="32"/>
-                                <buttonCell key="cell" type="push" title="d" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="uYK-0m-F7Q">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="destinationButton:" target="XfG-lQ-9wD" id="IEv-z3-eEI"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="peN-u6-mGI">
-                                <rect key="frame" x="110" y="-7" width="57" height="32"/>
-                                <buttonCell key="cell" type="push" title="&gt;&gt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9jC-Qt-viV">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="nextButton:" target="XfG-lQ-9wD" id="VsJ-Ct-drD"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CCB-Q8-TPm">
-                                <rect key="frame" x="160" y="-7" width="57" height="32"/>
-                                <buttonCell key="cell" type="push" title="&lt;&lt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zIc-cC-FFb">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="previousButton:" target="XfG-lQ-9wD" id="7qf-5V-rbU"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pXT-Ko-5IL">
-                                <rect key="frame" x="210" y="-7" width="60" height="32"/>
-                                <buttonCell key="cell" type="push" title="&gt;&gt;|" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xY0-w6-KOP">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="nextDirectoryButton:" target="XfG-lQ-9wD" id="5Os-Ko-Czr"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="akJ-xp-fMJ">
-                                <rect key="frame" x="259" y="-7" width="60" height="32"/>
-                                <buttonCell key="cell" type="push" title="|&lt;&lt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3tD-Z3-3pw">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="previousDirectoryButton:" target="XfG-lQ-9wD" id="HRP-F5-43n"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ijc-hJ-mna">
-                                <rect key="frame" x="314" y="-7" width="48" height="32"/>
-                                <buttonCell key="cell" type="push" title="c" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pfz-kM-R4V">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                            </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="072-hx-HlW">
-                                <rect key="frame" x="358" y="-7" width="48" height="32"/>
-                                <buttonCell key="cell" type="push" title="u" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xc6-sq-Y1F">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="undoButton:" target="XfG-lQ-9wD" id="8MO-AU-BQa"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ntv-js-C9q">
-                                <rect key="frame" x="399" y="-7" width="45" height="32"/>
-                                <buttonCell key="cell" type="push" title="t" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bMH-Oq-7Ke">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="toggleButtonsButton:" target="XfG-lQ-9wD" id="ypd-KF-NqW"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ogg-iO-RoX">
-                                <rect key="frame" x="438" y="-7" width="48" height="32"/>
-                                <buttonCell key="cell" type="push" title="h" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wBF-4g-195">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="helpButton:" target="XfG-lQ-9wD" id="dzh-hr-qGt"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L9Z-pC-pPJ">
-                                <rect key="frame" x="71" y="-7" width="47" height="32"/>
-                                <buttonCell key="cell" type="push" title="||" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="t58-tt-43y">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="playPauseButton:" target="XfG-lQ-9wD" id="CXw-8J-JJb"/>
-                                </connections>
-                            </button>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="D3G-Yb-zCo">
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D3G-Yb-zCo">
                                 <rect key="frame" x="3" y="33" width="640" height="360"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="groove" id="QBA-PH-HyM"/>
                             </imageView>
-                            <button toolTip="Pick source" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Jf-8m-3bQ">
-                                <rect key="frame" x="-6" y="-7" width="47" height="32"/>
-                                <buttonCell key="cell" type="push" title="s" bezelStyle="rounded" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hXs-QH-m7E">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="sourceButton:" target="XfG-lQ-9wD" id="MQe-Sz-wbY"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="pXT-Ko-5IL" firstAttribute="leading" secondItem="CCB-Q8-TPm" secondAttribute="trailing" constant="5" id="1bO-4Y-ubf"/>
-                            <constraint firstItem="8Jf-8m-3bQ" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="2KP-gT-0uC"/>
                             <constraint firstItem="yfV-A1-TV3" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="3If-Cg-Qxw"/>
-                            <constraint firstItem="pXT-Ko-5IL" firstAttribute="baseline" secondItem="akJ-xp-fMJ" secondAttribute="baseline" id="3KR-bX-r0K"/>
-                            <constraint firstItem="pXT-Ko-5IL" firstAttribute="baseline" secondItem="CCB-Q8-TPm" secondAttribute="baseline" id="4Mb-lA-zmh"/>
-                            <constraint firstItem="ijc-hJ-mna" firstAttribute="leading" secondItem="akJ-xp-fMJ" secondAttribute="trailing" constant="7" id="6Ub-iX-WB3"/>
                             <constraint firstItem="D3G-Yb-zCo" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="6cg-Ue-6lF"/>
-                            <constraint firstItem="ijc-hJ-mna" firstAttribute="baseline" secondItem="072-hx-HlW" secondAttribute="baseline" id="AUG-nl-Y31"/>
                             <constraint firstItem="D3G-Yb-zCo" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="6" id="CKt-pj-dNd"/>
-                            <constraint firstItem="072-hx-HlW" firstAttribute="baseline" secondItem="ntv-js-C9q" secondAttribute="baseline" id="EnM-5y-HJK"/>
                             <constraint firstItem="XED-xu-Xjl" firstAttribute="leading" secondItem="yfV-A1-TV3" secondAttribute="leading" id="FGv-u7-a7P"/>
-                            <constraint firstItem="XED-xu-Xjl" firstAttribute="centerX" secondItem="pXT-Ko-5IL" secondAttribute="centerX" id="KWy-ze-9cS"/>
-                            <constraint firstItem="ogg-iO-RoX" firstAttribute="baseline" secondItem="ntv-js-C9q" secondAttribute="baseline" id="P0L-sM-y0F"/>
                             <constraint firstItem="2JI-vr-KxK" firstAttribute="top" secondItem="D3G-Yb-zCo" secondAttribute="bottom" constant="13" id="PWG-Kr-Xaa"/>
-                            <constraint firstItem="ogg-iO-RoX" firstAttribute="baseline" secondItem="2JI-vr-KxK" secondAttribute="baseline" id="QBi-hu-Wfs"/>
-                            <constraint firstItem="2JI-vr-KxK" firstAttribute="leading" secondItem="ogg-iO-RoX" secondAttribute="trailing" constant="2" id="R4e-Wu-fiu"/>
                             <constraint firstItem="D3G-Yb-zCo" firstAttribute="top" secondItem="XED-xu-Xjl" secondAttribute="bottom" constant="15" id="SDN-Ha-cSH"/>
-                            <constraint firstItem="072-hx-HlW" firstAttribute="leading" secondItem="ijc-hJ-mna" secondAttribute="trailing" constant="8" id="UOg-IF-d43"/>
-                            <constraint firstAttribute="bottom" secondItem="ogg-iO-RoX" secondAttribute="bottom" id="Uzh-Xf-yC1"/>
-                            <constraint firstItem="L9Z-pC-pPJ" firstAttribute="baseline" secondItem="awM-gd-C7V" secondAttribute="baseline" id="VAi-Uu-6Kj"/>
-                            <constraint firstItem="peN-u6-mGI" firstAttribute="baseline" secondItem="CCB-Q8-TPm" secondAttribute="baseline" id="Vfd-ee-t1o"/>
-                            <constraint firstItem="CCB-Q8-TPm" firstAttribute="leading" secondItem="peN-u6-mGI" secondAttribute="trailing" constant="5" id="Vwf-sG-XRM"/>
-                            <constraint firstItem="ntv-js-C9q" firstAttribute="leading" secondItem="072-hx-HlW" secondAttribute="trailing" constant="5" id="WzW-96-uXO"/>
-                            <constraint firstItem="ijc-hJ-mna" firstAttribute="baseline" secondItem="akJ-xp-fMJ" secondAttribute="baseline" id="XOG-MV-3YS"/>
                             <constraint firstItem="XED-xu-Xjl" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" symbolic="YES" id="dQ6-oi-Wf8"/>
-                            <constraint firstItem="akJ-xp-fMJ" firstAttribute="leading" secondItem="pXT-Ko-5IL" secondAttribute="trailing" constant="1" id="eKy-bg-cQm"/>
-                            <constraint firstItem="L9Z-pC-pPJ" firstAttribute="leading" secondItem="awM-gd-C7V" secondAttribute="trailing" constant="2" id="g4t-T7-nUN"/>
-                            <constraint firstItem="peN-u6-mGI" firstAttribute="leading" secondItem="L9Z-pC-pPJ" secondAttribute="trailing" constant="4" id="hi2-9Q-9Wa"/>
-                            <constraint firstItem="awM-gd-C7V" firstAttribute="leading" secondItem="8Jf-8m-3bQ" secondAttribute="trailing" constant="3" id="iez-cf-S2M"/>
-                            <constraint firstItem="peN-u6-mGI" firstAttribute="baseline" secondItem="L9Z-pC-pPJ" secondAttribute="baseline" id="lTK-cs-G3E"/>
                             <constraint firstItem="yfV-A1-TV3" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="rgg-3V-Ew2"/>
-                            <constraint firstItem="ogg-iO-RoX" firstAttribute="leading" secondItem="ntv-js-C9q" secondAttribute="trailing" constant="6" id="wb5-wX-55X"/>
-                            <constraint firstItem="8Jf-8m-3bQ" firstAttribute="baseline" secondItem="awM-gd-C7V" secondAttribute="baseline" id="xbK-FA-7m1"/>
                             <constraint firstItem="yfV-A1-TV3" firstAttribute="trailing" secondItem="XED-xu-Xjl" secondAttribute="trailing" id="zZe-3D-6SE"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="destinationButton" destination="awM-gd-C7V" id="ObH-8m-Aa4"/>
                         <outlet property="destinationPath" destination="XED-xu-Xjl" id="F4B-FR-Zp2"/>
-                        <outlet property="helpButton" destination="ogg-iO-RoX" id="mI5-OH-Am1"/>
                         <outlet property="imageView" destination="D3G-Yb-zCo" id="oun-8I-FZq"/>
                         <outlet property="keyCaptureTextField" destination="2JI-vr-KxK" id="G2D-RA-kxl"/>
-                        <outlet property="moveItButton" destination="ijc-hJ-mna" id="37e-dt-Hgq"/>
-                        <outlet property="nextButton" destination="peN-u6-mGI" id="oJI-En-RqK"/>
-                        <outlet property="nextFolderButton" destination="pXT-Ko-5IL" id="01c-XN-WMi"/>
-                        <outlet property="playPauseButton" destination="L9Z-pC-pPJ" id="yo9-W9-8ST"/>
-                        <outlet property="previousButton" destination="CCB-Q8-TPm" id="Luk-ix-P0e"/>
-                        <outlet property="previousFolderButton" destination="akJ-xp-fMJ" id="1tp-Al-8PR"/>
-                        <outlet property="sourceButton" destination="8Jf-8m-3bQ" id="BwI-eB-5ii"/>
                         <outlet property="sourcePath" destination="yfV-A1-TV3" id="PJL-IU-48d"/>
-                        <outlet property="toggleButton" destination="ntv-js-C9q" id="6Xs-zT-3uQ"/>
-                        <outlet property="undoImageButton" destination="072-hx-HlW" id="E2J-hG-uVM"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -871,4 +805,16 @@
             <point key="canvasLocation" x="158.5" y="696"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSFolder" width="32" height="32"/>
+        <image name="NSFollowLinkFreestandingTemplate" width="14" height="14"/>
+        <image name="NSGoLeftTemplate" width="9" height="12"/>
+        <image name="NSGoRightTemplate" width="9" height="12"/>
+        <image name="NSInfo" width="32" height="32"/>
+        <image name="NSRefreshFreestandingTemplate" width="14" height="14"/>
+        <image name="NSRemoveTemplate" width="11" height="11"/>
+        <image name="NSStatusAvailable" width="16" height="16"/>
+        <image name="NSStatusNone" width="16" height="16"/>
+    </resources>
 </document>

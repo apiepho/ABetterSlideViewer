@@ -14,18 +14,6 @@
 @property (strong) IBOutlet NSTextField *destinationPath;
 @property (strong) IBOutlet NSImageView *imageView;
 
-// TODO: should add these to a panel or another view so who set can be hidden
-@property (strong) IBOutlet NSButton *sourceButton;
-@property (strong) IBOutlet NSButton *destinationButton;
-@property (strong) IBOutlet NSButton *playPauseButton;
-@property (strong) IBOutlet NSButton *nextButton;
-@property (strong) IBOutlet NSButton *previousButton;
-@property (strong) IBOutlet NSButton *nextFolderButton;
-@property (strong) IBOutlet NSButton *previousFolderButton;
-@property (strong) IBOutlet NSButton *moveItButton;
-@property (strong) IBOutlet NSButton *undoImageButton;
-@property (strong) IBOutlet NSButton *toggleButton;
-@property (strong) IBOutlet NSButton *helpButton;
 @end
 
 @implementation ViewController
@@ -52,17 +40,6 @@ bool playRunning = false;
     [self.imageView setWantsLayer: YES];
     [self.imageView.layer setBackgroundColor: [NSColor blackColor].CGColor];
  
-    self.sourceButton.toolTip           = @"pick source directory";
-    self.destinationButton.toolTip      = @"pick destination directory";
-    self.playPauseButton.toolTip        = @"toggle play/pause";
-    self.nextButton.toolTip             = @"next image";
-    self.previousButton.toolTip         = @"previous image";
-    self.nextFolderButton.toolTip       = @"move to next folder of images";
-    self.previousFolderButton.toolTip   = @"move to previous folder of images";
-    self.moveItButton.toolTip           = @"copy image from source to destination";
-    self.undoImageButton.toolTip        = @"undo last copy";
-    self.toggleButton.toolTip           = @"toggle hide/show of buttons";
-    self.helpButton.toolTip             = @"display help";
 
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSString *keyValue = [prefs stringForKey:@"keyForSourceTopPath"];
@@ -125,9 +102,6 @@ bool playRunning = false;
         case 32: // u, undo
             NSLog(@"u");
             break;
-        case 17: // t, toggle buttons
-            [self hideShowButtons];
-            break;
         case 4: // h, help
             NSLog(@"h");
             break;
@@ -147,80 +121,55 @@ bool playRunning = false;
     [alert runModal];
 }
 
-- (IBAction)sourceButton:(id)sender {
-    [self pickSource];
-}
-
-- (IBAction)destinationButton:(id)sender {
-    // TODO
-    [self underConstruction];
-}
-
-- (IBAction)playPauseButton:(id)sender {
-    [self playPause];
-}
-
-- (IBAction)nextButton:(id)sender {
-    // pause, op, play to keep timing of play in sync
-    [self pause];
-    [self nextImage];
-    [self play];
-}
-
-- (IBAction)previousButton:(id)sender {
-    // pause, op, play to keep timing of play in sync
-    [self pause];
-    [self previousImage];
-    [self play];
-}
-
-- (IBAction)nextDirectoryButton:(id)sender {
-    // pause, op, play to keep timing of play in sync
-    [self pause];
-    [self nextDirectory];
-    [self play];
-}
-
-- (IBAction)previousDirectoryButton:(id)sender {
-    // pause, op, play to keep timing of play in sync
-    [self pause];
-    [self previousDirectory];
-    [self play];
-}
-
-- (IBAction)copyButton:(id)sender {
-    // TODO
-    [self underConstruction];
-}
-
-- (IBAction)undoButton:(id)sender {
-    // TODO
-    [self underConstruction];
-}
-
-- (IBAction)toggleButtonsButton:(id)sender {
-    [self hideShowButtons];
-}
-
-- (IBAction)helpButton:(id)sender {
-    // TODO
-    [self underConstruction];
-}
-
-- (void)hideShowButtons {
-    bool state = !self.sourceButton.hidden;
-    
-    self.sourceButton.hidden            = state;
-    self.destinationButton.hidden       = state;
-    self.playPauseButton.hidden         = state;
-    self.nextButton.hidden              = state;
-    self.previousButton.hidden          = state;
-    self.nextFolderButton.hidden        = state;
-    self.previousFolderButton.hidden    = state;
-    self.moveItButton.hidden            = state;
-    self.undoImageButton.hidden         = state;
-    self.toggleButton.hidden            = state;
-    self.helpButton.hidden              = state;
+- (IBAction)toolbarAction:(id)sender {
+    //NSLog(@"%@",[sender label]);
+    switch ([sender tag]) {
+        case 1: // source
+            [self pickSource];
+            break;
+        case 2: // destination
+            NSLog(@"d");
+            break;
+        case 3: // play
+            [self playPause];
+            break;
+        case 4: // next
+            // pause, op, play to keep timing of play in sync
+            [self pause];
+            [self nextImage];
+            [self play];
+            break;
+        case 5: // prev
+            // pause, op, play to keep timing of play in sync
+            [self pause];
+            [self previousImage];
+            [self play];
+            break;
+        case 7: // next folder
+            // pause, op, play to keep timing of play in sync
+            [self pause];
+            [self nextDirectory];
+            [self play];
+            break;
+        case 6: // previous folder
+            // pause, op, play to keep timing of play in sync
+            [self pause];
+            [self previousDirectory];
+            [self play];
+            break;
+        case 8: // copy
+            [self underConstruction];
+           break;
+        case 9: // undo
+            [self underConstruction];
+            break;
+        case 10: // help
+            [self underConstruction];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (void) play {
