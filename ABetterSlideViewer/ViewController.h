@@ -15,5 +15,9 @@
 
 // capture toolbar actions
 - (IBAction)toolbarAction:(id)sender;
+
+- (IBAction) item1Action:(NSMenuItem *)sender;
+- (IBAction) item2Action:(id)sender;
+    
 @end
 

@@ -172,32 +172,14 @@ bool playRunning = false;
     }
 }
 
-- (void) play {
-    if (playRunning && playTimer == nil) {
-        playTimer = [NSTimer scheduledTimerWithTimeInterval:playInterval
-                                                     target:self
-                                                   selector:@selector(nextImage)
-                                                   userInfo:nil
-                                                    repeats:YES];
-    }
+- (IBAction) item1Action:(NSMenuItem *)sender {
+    NSLog(@"item1");
 }
 
-- (void) pause {
-    if (playRunning && playTimer != nil) {
-        [playTimer invalidate];
-        playTimer = nil;
-    }
+- (IBAction) item2Action:(id)sender {
+    NSLog(@"item2");
 }
 
-- (void) playPause {
-    if (playTimer == nil) {
-        playRunning = true;
-        [self play];
-    } else {
-        [self pause];
-        playRunning = false;
-    }
-}
 
 #pragma mark "Internal"
 // TODO: split these out to another class?
@@ -335,13 +317,38 @@ bool playRunning = false;
     [self updateImage];
 }
 
+- (void) play {
+    if (playRunning && playTimer == nil) {
+        playTimer = [NSTimer scheduledTimerWithTimeInterval:playInterval
+                                                     target:self
+                                                   selector:@selector(nextImage)
+                                                   userInfo:nil
+                                                    repeats:YES];
+    }
+}
+
+- (void) pause {
+    if (playRunning && playTimer != nil) {
+        [playTimer invalidate];
+        playTimer = nil;
+    }
+}
+
+- (void) playPause {
+    if (playTimer == nil) {
+        playRunning = true;
+        [self play];
+    } else {
+        [self pause];
+        playRunning = false;
+    }
+}
 @end
 
 
 // TODO - UI OP
 // - key capture over other components
 // - try first responder again???
-// - try menu items again???
 // - fix stretch
 // - use cocoa toolbar for buttons
 
@@ -349,11 +356,14 @@ bool playRunning = false;
 // - destination
 // - copy
 // - undo
+// - menu options for
+//      type of copy (mirror vs by month)
+//      speed of play
+//      background colors
+
 
 // TODO - UI LOOK
 // - black behind image
-// - images for buttons
-// - icons for app
 
 // - installer
 // - sign app

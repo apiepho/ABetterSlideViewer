@@ -623,6 +623,25 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Options" id="xdg-fo-08a">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Options" id="ims-9x-soZ">
+                                    <items>
+                                        <menuItem title="Item1" id="KFC-n0-How">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="item1Action:" target="Ady-hI-5gd" id="y7z-jg-Lvd"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Item2" id="8RY-lS-3CV">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="item2Action:" target="Ady-hI-5gd" id="faJ-oK-uK8"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Help" id="wpr-3q-Mcd">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Help" systemMenu="help" id="F2S-fz-NVQ">
