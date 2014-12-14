@@ -347,10 +347,11 @@ bool playRunning = false;
 
 
 // TODO - UI OP
+// - add menu options for all key capture keys
+// - add key equivalents to menu options
+// instead of:
 // - key capture over other components
 // - try first responder again???
-// - fix stretch
-// - use cocoa toolbar for buttons
 
 // TODO - FEATURES
 // - destination
