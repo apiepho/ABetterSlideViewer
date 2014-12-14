@@ -627,16 +627,56 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Options" id="ims-9x-soZ">
                                     <items>
-                                        <menuItem title="Item1" id="KFC-n0-How">
+                                        <menuItem title="Source..." tag="1" keyEquivalent="s" id="s1t-3a-G7v">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="item1Action:" target="Ady-hI-5gd" id="y7z-jg-Lvd"/>
+                                                <action selector="menuItemAction:" target="Ady-hI-5gd" id="3pL-9S-iMk"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Item2" id="8RY-lS-3CV">
+                                        <menuItem title="Destination..." tag="2" keyEquivalent="d" id="E8V-ak-5aW">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="item2Action:" target="Ady-hI-5gd" id="faJ-oK-uK8"/>
+                                                <action selector="menuItemAction:" target="Ady-hI-5gd" id="4qp-9m-Toy"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="PlayPause" tag="3" keyEquivalent="" id="3zK-4Z-Hsc">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuItemAction:" target="Ady-hI-5gd" id="oVF-hz-5os"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Next" tag="4" keyEquivalent="" id="sgK-AG-SJg">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuItemAction:" target="Ady-hI-5gd" id="1Rh-pA-RtI"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Previous" tag="5" keyEquivalent="" id="IRg-7K-iJO">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuItemAction:" target="Ady-hI-5gd" id="JnF-PN-yQk"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Next Folder" tag="7" keyEquivalent="" id="cLm-JC-I8v">
+                                            <connections>
+                                                <action selector="menuItemAction:" target="Ady-hI-5gd" id="DBb-KP-L5e"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Previous Folder" tag="6" keyEquivalent="" id="mEm-xT-sSB">
+                                            <connections>
+                                                <action selector="menuItemAction:" target="Ady-hI-5gd" id="qxN-xL-IzF"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Copy" tag="8" keyEquivalent=" " id="sre-IB-hFE">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuItemAction:" target="Ady-hI-5gd" id="wFQ-Jq-K3c"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Undo" tag="9" keyEquivalent="u" id="B8u-Hh-zEf">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="menuItemAction:" target="Ady-hI-5gd" id="saV-qf-N4x"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -769,7 +809,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2JI-vr-KxK">
-                                <rect key="frame" x="0.0" y="2" width="191" height="20"/>
+                                <rect key="frame" x="0.0" y="2" width="104" height="100"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" id="ZtO-IW-gP0">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" white="0.66666666666666663" alpha="0.0" colorSpace="calibratedWhite"/>

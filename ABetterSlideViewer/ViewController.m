@@ -33,9 +33,7 @@ bool playRunning = false;
     // Do any additional setup after loading the view.
     [self.view setWantsLayer: YES];
     [self.view.layer setBackgroundColor: [NSColor blackColor].CGColor];
-    [self.sourcePath setBackgroundColor:[NSColor blackColor]];
     [self.sourcePath setTextColor:[NSColor grayColor]];
-    [self.destinationPath setBackgroundColor:[NSColor blackColor]];
     [self.destinationPath setTextColor:[NSColor grayColor]];
     [self.imageView setWantsLayer: YES];
     [self.imageView.layer setBackgroundColor: [NSColor blackColor].CGColor];
@@ -55,65 +53,6 @@ bool playRunning = false;
     // Update the view, if already loaded.
 }
 
-// Capture any keyUp events and interpret as view options
-- (void)keyUp:(NSEvent *)theEvent {
-    // TODO: should use some #define for keycodes instead of magic numbers
-    NSLog(@"%d",[theEvent keyCode]);
-    switch ([theEvent keyCode]) {
-        case 1: // s, source
-            [self pickSource];
-            break;
-        case 2: // d, destination
-            NSLog(@"d");
-            break;
-        case 125: // v, play/pause
-            [self playPause];
-            break;
-        case 124: // > next
-            // pause, op, play to keep timing of play in sync
-            [self pause];
-            [self nextImage];
-            [self play];
-            break;
-        case 123: // < prev
-            // pause, op, play to keep timing of play in sync
-            [self pause];
-            [self previousImage];
-            [self play];
-            break;
-        case 45: // n, next folder
-            // pause, op, play to keep timing of play in sync
-            [self pause];
-            [self nextDirectory];
-            [self play];
-            break;
-        case 35: // p, previous folder
-            // pause, op, play to keep timing of play in sync
-            [self pause];
-            [self previousDirectory];
-            [self play];
-            break;
-        case 49: // space, copy
-            NSLog(@"space");
-            break;
-        case 8: // c, copy
-            NSLog(@"c");
-            break;
-        case 32: // u, undo
-            NSLog(@"u");
-            break;
-        case 4: // h, help
-            NSLog(@"h");
-            break;
-        case 44: // / or ?, help
-            NSLog(@"?");
-            break;
-        
-        default:
-            break;
-    }
-    [self.keyCaptureTextField setStringValue:@""]; // clear
-}
 
 - (void) underConstruction {
     NSAlert *alert = [[NSAlert alloc] init];
@@ -122,62 +61,11 @@ bool playRunning = false;
 }
 
 - (IBAction)toolbarAction:(id)sender {
-    //NSLog(@"%@",[sender label]);
-    switch ([sender tag]) {
-        case 1: // source
-            [self pickSource];
-            break;
-        case 2: // destination
-            NSLog(@"d");
-            break;
-        case 3: // play
-            [self playPause];
-            break;
-        case 4: // next
-            // pause, op, play to keep timing of play in sync
-            [self pause];
-            [self nextImage];
-            [self play];
-            break;
-        case 5: // prev
-            // pause, op, play to keep timing of play in sync
-            [self pause];
-            [self previousImage];
-            [self play];
-            break;
-        case 7: // next folder
-            // pause, op, play to keep timing of play in sync
-            [self pause];
-            [self nextDirectory];
-            [self play];
-            break;
-        case 6: // previous folder
-            // pause, op, play to keep timing of play in sync
-            [self pause];
-            [self previousDirectory];
-            [self play];
-            break;
-        case 8: // copy
-            [self underConstruction];
-           break;
-        case 9: // undo
-            [self underConstruction];
-            break;
-        case 10: // help
-            [self underConstruction];
-            break;
-            
-        default:
-            break;
-    }
+    [self handleAction:[sender tag]];
 }
 
-- (IBAction) item1Action:(NSMenuItem *)sender {
-    NSLog(@"item1");
-}
-
-- (IBAction) item2Action:(id)sender {
-    NSLog(@"item2");
+- (IBAction) menuItemAction:(id)sender {
+    [self handleAction:[sender tag]];
 }
 
 
@@ -343,15 +231,62 @@ bool playRunning = false;
         playRunning = false;
     }
 }
+
+- (void)handleAction:(NSInteger)tag {
+    switch (tag) {
+        case 1: // source
+            [self pickSource];
+            break;
+        case 2: // destination
+            NSLog(@"d");
+            break;
+        case 3: // play
+            [self playPause];
+            break;
+        case 4: // next
+            // pause, op, play to keep timing of play in sync
+            [self pause];
+            [self nextImage];
+            [self play];
+            break;
+        case 5: // prev
+            // pause, op, play to keep timing of play in sync
+            [self pause];
+            [self previousImage];
+            [self play];
+            break;
+        case 7: // next folder
+            // pause, op, play to keep timing of play in sync
+            [self pause];
+            [self nextDirectory];
+            [self play];
+            break;
+        case 6: // previous folder
+            // pause, op, play to keep timing of play in sync
+            [self pause];
+            [self previousDirectory];
+            [self play];
+            break;
+        case 8: // copy
+            [self underConstruction];
+            break;
+        case 9: // undo
+            [self underConstruction];
+            break;
+        case 10: // help
+            [self underConstruction];
+            break;
+        default:
+            break;
+    }
+}
+
 @end
 
 
 // TODO - UI OP
-// - add menu options for all key capture keys
-// - add key equivalents to menu options
-// instead of:
 // - key capture over other components
-// - try first responder again???
+// - try first responder again??? ... works if I have textfield in focus
 
 // TODO - FEATURES
 // - destination

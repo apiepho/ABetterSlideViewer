@@ -10,14 +10,8 @@
 
 @interface ViewController : NSViewController
 
-// capture the keyup
-- (void)keyUp:(NSEvent *)theEvent;
-
-// capture toolbar actions
 - (IBAction)toolbarAction:(id)sender;
-
-- (IBAction) item1Action:(NSMenuItem *)sender;
-- (IBAction) item2Action:(id)sender;
+- (IBAction) menuItemAction:(id)sender;
     
 @end
 
