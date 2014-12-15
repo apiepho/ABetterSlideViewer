@@ -9,10 +9,12 @@
 #import "ViewController.h"
 
 @interface ViewController()
-@property (strong) IBOutlet NSTextField *keyCaptureTextField;
 @property (strong) IBOutlet NSTextField *sourcePath;
 @property (strong) IBOutlet NSTextField *destinationPath;
 @property (strong) IBOutlet NSImageView *imageView;
+
+// HACK to get first responder actions so menu items are enabledd
+@property (strong) IBOutlet NSTextField *focusTextField;
 
 @end
 
@@ -37,7 +39,12 @@ bool playRunning = false;
     [self.destinationPath setTextColor:[NSColor grayColor]];
     [self.imageView setWantsLayer: YES];
     [self.imageView.layer setBackgroundColor: [NSColor blackColor].CGColor];
- 
+
+    // HACK to get first responder actions so menu items are enable
+    //      need to have a textField or something focusable to get menu and toolbar
+    //      items to work.
+    [self.focusTextField setAlphaValue:0.0];
+    [self.focusTextField setFocusRingType:NSFocusRingTypeNone];
 
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSString *keyValue = [prefs stringForKey:@"keyForSourceTopPath"];
@@ -47,11 +54,33 @@ bool playRunning = false;
     }
 }
 
+- (void) viewWillAppear {
+    // HACK to get first responder actions so menu items are enable
+    //      need to delay when t is set as first responder
+   [self.focusTextField.window makeFirstResponder:self.focusTextField];
+}
+
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
 
     // Update the view, if already loaded.
 }
+
+// HACK to get first responder actions so menu items are enable
+//      since text area is in focus, it captures characters that should
+//      be processed by menu item extended char
+- (IBAction)keyUp:(NSEvent *)theEvent {
+    NSInteger tag = 0;
+    switch ([theEvent.characters characterAtIndex:0]) {
+        case 's': tag = 1; break;
+        case 'd': tag = 2; break;
+        case 'c': tag = 8; break;
+        case 'u': tag = 9; break;
+    }
+    [self.focusTextField setStringValue:@""];
+    [self handleAction:tag];
+}
+
 
 
 - (void) underConstruction {

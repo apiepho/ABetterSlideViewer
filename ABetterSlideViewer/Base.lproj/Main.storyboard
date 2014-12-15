@@ -667,7 +667,7 @@
                                                 <action selector="menuItemAction:" target="Ady-hI-5gd" id="qxN-xL-IzF"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Copy" tag="8" keyEquivalent=" " id="sre-IB-hFE">
+                                        <menuItem title="Copy" tag="8" keyEquivalent="c" id="sre-IB-hFE">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuItemAction:" target="Ady-hI-5gd" id="wFQ-Jq-K3c"/>
@@ -808,14 +808,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="647" height="442"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2JI-vr-KxK">
-                                <rect key="frame" x="0.0" y="2" width="104" height="100"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" id="ZtO-IW-gP0">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" white="0.66666666666666663" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
-                                </textFieldCell>
-                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yfV-A1-TV3">
                                 <rect key="frame" x="18" y="425" width="444" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(picture path)" id="YVc-Lw-3kj">
@@ -836,6 +828,14 @@
                                 <rect key="frame" x="3" y="10" width="641" height="381"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="groove" id="QBA-PH-HyM"/>
                             </imageView>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O9U-t7-RGu">
+                                <rect key="frame" x="6" y="366" width="96" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="8zJ-wA-VOj">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstItem="yfV-A1-TV3" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="3If-Cg-Qxw"/>
@@ -851,8 +851,8 @@
                     </view>
                     <connections>
                         <outlet property="destinationPath" destination="XED-xu-Xjl" id="F4B-FR-Zp2"/>
+                        <outlet property="focusTextField" destination="O9U-t7-RGu" id="jox-40-xxq"/>
                         <outlet property="imageView" destination="D3G-Yb-zCo" id="oun-8I-FZq"/>
-                        <outlet property="keyCaptureTextField" destination="2JI-vr-KxK" id="G2D-RA-kxl"/>
                         <outlet property="sourcePath" destination="yfV-A1-TV3" id="PJL-IU-48d"/>
                     </connections>
                 </viewController>
