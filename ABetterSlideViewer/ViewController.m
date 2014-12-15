@@ -20,6 +20,7 @@
 
 @implementation ViewController
 
+NSString *destinationTopPath;
 NSString *sourceTopPath;
 NSMutableArray *sourcePaths;
 NSInteger currentIndex = -1;
@@ -28,6 +29,8 @@ float playInterval = 2.0f;
 NSTimer *playTimer = nil;
 bool playRunning = false;
 
+NSMutableArray *history;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,8 +38,8 @@ bool playRunning = false;
     // Do any additional setup after loading the view.
     [self.view setWantsLayer: YES];
     [self.view.layer setBackgroundColor: [NSColor blackColor].CGColor];
-    [self.sourcePath setTextColor:[NSColor grayColor]];
-    [self.destinationPath setTextColor:[NSColor grayColor]];
+    [self.sourcePath setTextColor:[NSColor whiteColor]];
+    [self.destinationPath setTextColor:[NSColor whiteColor]];
     [self.imageView setWantsLayer: YES];
     [self.imageView.layer setBackgroundColor: [NSColor blackColor].CGColor];
 
@@ -47,11 +50,19 @@ bool playRunning = false;
     [self.focusTextField setFocusRingType:NSFocusRingTypeNone];
 
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    NSString *keyValue = [prefs stringForKey:@"keyForSourceTopPath"];
+    NSString *keyValue;
+    keyValue = [prefs stringForKey:@"keyForSourceTopPath"];
     if (keyValue != nil) {
         sourceTopPath = keyValue;
         [self loadPaths];
     }
+    keyValue = [prefs stringForKey:@"keyForDestinationTopPath"];
+    if (keyValue != nil) {
+        destinationTopPath = keyValue;
+        self.destinationPath.stringValue = destinationTopPath;
+    }
+    
+    history = [[NSMutableArray alloc] init];
 }
 
 - (void) viewWillAppear {
@@ -123,6 +134,27 @@ bool playRunning = false;
     }];
 }
 
+- (void) pickDestination {
+    NSSavePanel* panel = [NSSavePanel savePanel];
+    panel.title                   = @"Choose a directory for copying pictures";
+    panel.showsResizeIndicator    = YES;
+    panel.showsHiddenFiles        = NO;
+    panel.canCreateDirectories    = YES;
+    
+    [panel beginWithCompletionHandler:^(NSInteger result){
+        if (result == NSFileHandlingPanelOKButton) {
+            NSURL *selection = [panel URL];
+            destinationTopPath = [selection.path stringByResolvingSymlinksInPath];
+            //NSLog(@"destination TOP path: %@", destinationTopPath);
+            
+            self.destinationPath.stringValue = destinationTopPath;
+
+            NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+            [prefs setObject:destinationTopPath forKey:@"keyForDestinationTopPath"];
+        }
+    }];
+}
+
 - (void) loadPaths {
     
     if (sourceTopPath != nil) {
@@ -133,8 +165,6 @@ bool playRunning = false;
         sourcePaths = [[NSMutableArray alloc] init];
         while ( (filePath = [enumerator nextObject] ) != nil ){
             // If we have the right type of file, add it to the list
-            // Make sure to prepend the directory path
-            //if( [[filePath pathExtension] isEqualToString:@"jpg"] || [[filePath pathExtension] isEqualToString:@"JPG"] ){
             NSMutableArray *supported = [[NSMutableArray alloc] initWithObjects:@"jpg", @"JPG" , nil];
             if( [supported containsObject:[filePath pathExtension]]){
                 [sourcePaths addObject:[sourceTopPath stringByAppendingPathComponent: filePath]];
@@ -152,7 +182,6 @@ bool playRunning = false;
     NSString *name = sourcePaths[currentIndex];
     self.sourcePath.stringValue = name;
     NSImage *image = [[NSImage alloc] initWithContentsOfFile:name];
-// TODO: doesn't seem to change things    [image setBackgroundColor:[NSColor blackColor]];
     [self.imageView setImage: image];
 }
 
@@ -261,13 +290,47 @@ bool playRunning = false;
     }
 }
 
+- (void) copyCurrent {
+    if (self.destinationPath != nil) {
+        NSError *error;;
+        NSString *srcPath = sourcePaths[currentIndex];
+        NSString *dstPath = [srcPath stringByReplacingOccurrencesOfString:sourceTopPath withString:destinationTopPath];
+        NSString *dstPathBase = [dstPath stringByDeletingLastPathComponent];
+
+        if (![[NSFileManager defaultManager] fileExistsAtPath:dstPath]) {
+            BOOL success;
+            success = [[NSFileManager defaultManager] createDirectoryAtPath:dstPathBase withIntermediateDirectories:YES attributes:nil error:&error];
+            if (success) {
+                success = [[NSFileManager defaultManager] copyItemAtPath:srcPath toPath:dstPath error:&error];
+                if (success) {
+                    NSLog(@"COPY: source      file: %@", srcPath);
+                    NSLog(@"COPY: destination file: %@", dstPath);
+                    [history addObject:dstPath];
+                }
+            }
+        }
+    }
+}
+
+- (void) undoCopy {
+    if (history.count > 0) {
+        NSError *error;
+        NSString *fileToUndo = [history lastObject];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:fileToUndo]) {
+            NSLog(@"UNDO: removing file: %@", fileToUndo);
+            [[NSFileManager defaultManager] removeItemAtPath:fileToUndo error:&error];
+            [history removeLastObject];
+        }
+    }
+}
+
 - (void)handleAction:(NSInteger)tag {
     switch (tag) {
         case 1: // source
             [self pickSource];
             break;
         case 2: // destination
-            NSLog(@"d");
+            [self pickDestination];
             break;
         case 3: // play
             [self playPause];
@@ -297,10 +360,10 @@ bool playRunning = false;
             [self play];
             break;
         case 8: // copy
-            [self underConstruction];
+            [self copyCurrent];
             break;
         case 9: // undo
-            [self underConstruction];
+            [self undoCopy];
             break;
         case 10: // help
             [self underConstruction];
