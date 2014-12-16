@@ -303,8 +303,8 @@ NSMutableArray *history;
             if (success) {
                 success = [[NSFileManager defaultManager] copyItemAtPath:srcPath toPath:dstPath error:&error];
                 if (success) {
-                    NSLog(@"COPY: source      file: %@", srcPath);
-                    NSLog(@"COPY: destination file: %@", dstPath);
+                    //NSLog(@"COPY: source      file: %@", srcPath);
+                    //NSLog(@"COPY: destination file: %@", dstPath);
                     [history addObject:dstPath];
                 }
             }
@@ -317,7 +317,7 @@ NSMutableArray *history;
         NSError *error;
         NSString *fileToUndo = [history lastObject];
         if ([[NSFileManager defaultManager] fileExistsAtPath:fileToUndo]) {
-            NSLog(@"UNDO: removing file: %@", fileToUndo);
+            //NSLog(@"UNDO: removing file: %@", fileToUndo);
             [[NSFileManager defaultManager] removeItemAtPath:fileToUndo error:&error];
             [history removeLastObject];
         }
