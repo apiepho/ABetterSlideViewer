@@ -77,6 +77,24 @@ NSMutableArray *history;
     // Update the view, if already loaded.
 }
 
+//- (BOOL)acceptsFirstResponder
+//{
+//    NSLog(@"I accepted being a first responder! Yea!222");
+//    return YES;
+//}
+//
+//- (BOOL)resignFirstResponder
+//{
+//    [self.view setNeedsDisplay:YES];
+//    return YES;
+//}
+//
+//- (BOOL)becomeFirstResponder
+//{
+//    [self.view setNeedsDisplay:YES];
+//    return YES;
+//}
+
 // HACK to get first responder actions so menu items are enable
 //      since text area is in focus, it captures characters that should
 //      be processed by menu item extended char
