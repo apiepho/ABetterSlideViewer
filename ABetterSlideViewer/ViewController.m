@@ -405,25 +405,21 @@ NSMutableArray *history;
 @end
 
 
-// TODO - UI OP
-// - key capture over other components
-// - try first responder again??? ... works if I have textfield in focus
-
 // TODO - FEATURES
-// - destination
-// - copy
-// - undo
 // - menu options for
 //      type of copy (mirror vs by month)
 //      speed of play
 //      background colors
 
-
-// TODO - UI LOOK
+// TODO - UI
+// - fix first responder for toolbar and menubar someday
 // - black behind image
+// - better images for toolbar buttons
+// - image for app
 
 // - installer
 // - sign app
+
 
 
 
