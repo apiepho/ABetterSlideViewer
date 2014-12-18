@@ -13,7 +13,6 @@
 		61B4D6361A3493CE0031B066 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61B4D6351A3493CE0031B066 /* Images.xcassets */; };
 		61B4D6391A3493CE0031B066 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61B4D6371A3493CE0031B066 /* Main.storyboard */; };
 		61B4D6451A3493CE0031B066 /* ABetterSlideViewerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B4D6441A3493CE0031B066 /* ABetterSlideViewerTests.m */; };
-		61B4D67F1A41B2700031B066 /* SlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B4D67E1A41B2700031B066 /* SlideView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +38,6 @@
 		61B4D63E1A3493CE0031B066 /* ABetterSlideViewerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABetterSlideViewerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		61B4D6431A3493CE0031B066 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		61B4D6441A3493CE0031B066 /* ABetterSlideViewerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ABetterSlideViewerTests.m; sourceTree = "<group>"; };
-		61B4D67D1A41B2700031B066 /* SlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideView.h; sourceTree = "<group>"; };
-		61B4D67E1A41B2700031B066 /* SlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,8 +85,6 @@
 				61B4D6331A3493CE0031B066 /* ViewController.m */,
 				61B4D6351A3493CE0031B066 /* Images.xcassets */,
 				61B4D6371A3493CE0031B066 /* Main.storyboard */,
-				61B4D67D1A41B2700031B066 /* SlideView.h */,
-				61B4D67E1A41B2700031B066 /* SlideView.m */,
 				61B4D62B1A3493CE0031B066 /* Supporting Files */,
 			);
 			path = ABetterSlideViewer;
@@ -222,7 +217,6 @@
 			files = (
 				61B4D6341A3493CE0031B066 /* ViewController.m in Sources */,
 				61B4D6311A3493CE0031B066 /* main.m in Sources */,
-				61B4D67F1A41B2700031B066 /* SlideView.m in Sources */,
 				61B4D62F1A3493CE0031B066 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

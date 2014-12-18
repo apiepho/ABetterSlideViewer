@@ -46,7 +46,7 @@ NSMutableArray *history;
     // HACK to get first responder actions so menu items are enable
     //      need to have a textField or something focusable to get menu and toolbar
     //      items to work.
-    [self.focusTextField setAlphaValue:0.0];
+    [self.focusTextField setAlphaValue:1.0];
     [self.focusTextField setFocusRingType:NSFocusRingTypeNone];
 
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -65,52 +65,21 @@ NSMutableArray *history;
     history = [[NSMutableArray alloc] init];
 }
 
-- (void) viewWillAppear {
-    // HACK to get first responder actions so menu items are enable
-    //      need to delay when t is set as first responder
-   [self.focusTextField.window makeFirstResponder:self.focusTextField];
-}
-
-- (void)setRepresentedObject:(id)representedObject {
-    [super setRepresentedObject:representedObject];
-
-    // Update the view, if already loaded.
-}
-
-//- (BOOL)acceptsFirstResponder
-//{
-//    NSLog(@"I accepted being a first responder! Yea!222");
-//    return YES;
-//}
-//
-//- (BOOL)resignFirstResponder
-//{
-//    [self.view setNeedsDisplay:YES];
-//    return YES;
-//}
-//
-//- (BOOL)becomeFirstResponder
-//{
-//    [self.view setNeedsDisplay:YES];
-//    return YES;
-//}
 
 // HACK to get first responder actions so menu items are enable
 //      since text area is in focus, it captures characters that should
 //      be processed by menu item extended char
 - (IBAction)keyUp:(NSEvent *)theEvent {
+    [self.focusTextField setAlphaValue:0.0];
     NSInteger tag = 0;
     switch ([theEvent.characters characterAtIndex:0]) {
-        case 's': tag = 1; break;
-        case 'd': tag = 2; break;
-        case 'c': tag = 8; break;
-        case 'u': tag = 9; break;
+        case ' ': tag = 3; break; // play/pause
+        case 'c': tag = 8; break; // copy
+        case 'u': tag = 9; break; // undo
     }
     [self.focusTextField setStringValue:@""];
     [self handleAction:tag];
 }
-
-
 
 - (void) underConstruction {
     NSAlert *alert = [[NSAlert alloc] init];
@@ -119,10 +88,12 @@ NSMutableArray *history;
 }
 
 - (IBAction)toolbarAction:(id)sender {
+    [self.focusTextField setAlphaValue:0.0];
     [self handleAction:[sender tag]];
 }
 
 - (IBAction) menuItemAction:(id)sender {
+    [self.focusTextField setAlphaValue:0.0];
     [self handleAction:[sender tag]];
 }
 
@@ -223,17 +194,22 @@ NSMutableArray *history;
     if (currentIndex == -1) return;
     if (sourcePaths.count < 2) return;
 
+    NSString *thisDir;
+    NSString *nextDir;
+    NSInteger nextIndex;
+
     bool done = false;
     NSInteger thisIndex = currentIndex;
+    // cycle forward until find different last directory
     while (!done) {
         // set next index
-        NSInteger nextIndex = thisIndex + 1;
+        nextIndex = thisIndex + 1;
         if (nextIndex >= sourcePaths.count)
             nextIndex = 0;
         
         // get base path
-        NSString *thisDir = [sourcePaths[thisIndex] stringByDeletingLastPathComponent];
-        NSString *nextDir = [sourcePaths[nextIndex] stringByDeletingLastPathComponent];
+        thisDir = [sourcePaths[thisIndex] stringByDeletingLastPathComponent];
+        nextDir = [sourcePaths[nextIndex] stringByDeletingLastPathComponent];
         
         if (![thisDir isEqualToString:nextDir]) {
             // found a different directory
@@ -254,21 +230,56 @@ NSMutableArray *history;
     if (currentIndex == -1) return;
     if (sourcePaths.count < 2) return;
     
+    NSString *thisDir;
+    NSString *nextDir;
+    NSInteger nextIndex;
+    
     bool done = false;
     NSInteger thisIndex = currentIndex;
+    // cycle backward until find different last directory
     while (!done) {
         // set next index
-        NSInteger nextIndex = thisIndex - 1;
+        nextIndex = thisIndex - 1;
         if (nextIndex < 0)
             nextIndex = sourcePaths.count-1;
        
         // get base path
-        NSString *thisDir = [sourcePaths[thisIndex] stringByDeletingLastPathComponent];
-        NSString *nextDir = [sourcePaths[nextIndex] stringByDeletingLastPathComponent];
+        thisDir = [sourcePaths[thisIndex] stringByDeletingLastPathComponent];
+        nextDir = [sourcePaths[nextIndex] stringByDeletingLastPathComponent];
         
         if (![thisDir isEqualToString:nextDir]) {
             // found a different directory
             currentIndex = nextIndex;
+
+            // keep cyling to first image in this dir
+            thisIndex = nextIndex;
+           
+            bool innerDone = false;
+            // cycle backward until find different last directory
+            while (!innerDone) {
+                // set next index
+                nextIndex = thisIndex - 1;
+                if (nextIndex < 0)
+                    nextIndex = sourcePaths.count-1;
+                
+                // get base path
+                thisDir = [sourcePaths[thisIndex] stringByDeletingLastPathComponent];
+                nextDir = [sourcePaths[nextIndex] stringByDeletingLastPathComponent];
+                
+                if (![thisDir isEqualToString:nextDir]) {
+                    // found a different directory
+                    currentIndex = thisIndex;
+                    
+                    innerDone = true;
+                } else if (thisIndex == 0) {
+                    // have checked all paths
+                    innerDone = true;
+                } else {
+                    // move to next directory
+                    thisIndex--;
+                }
+            }
+            
             done = true;
         } else if (thisIndex == 0) {
             // have checked all paths

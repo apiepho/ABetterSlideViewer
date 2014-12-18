@@ -627,13 +627,13 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Options" id="ims-9x-soZ">
                                     <items>
-                                        <menuItem title="Source..." tag="1" keyEquivalent="s" id="s1t-3a-G7v">
+                                        <menuItem title="Source..." tag="1" id="s1t-3a-G7v">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuItemAction:" target="Ady-hI-5gd" id="3pL-9S-iMk"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Destination..." tag="2" keyEquivalent="d" id="E8V-ak-5aW">
+                                        <menuItem title="Destination..." tag="2" id="E8V-ak-5aW">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuItemAction:" target="Ady-hI-5gd" id="4qp-9m-Toy"/>
@@ -667,14 +667,14 @@
                                                 <action selector="menuItemAction:" target="Ady-hI-5gd" id="qxN-xL-IzF"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Copy" tag="8" keyEquivalent="c" id="sre-IB-hFE">
+                                        <menuItem title="Copy" tag="8" keyEquivalent="" id="sre-IB-hFE">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="menuItemAction:" target="Ady-hI-5gd" id="wFQ-Jq-K3c"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Undo" tag="9" keyEquivalent="u" id="B8u-Hh-zEf">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem title="Undo" tag="9" keyEquivalent="" id="B8u-Hh-zEf">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                             <connections>
                                                 <action selector="menuItemAction:" target="Ady-hI-5gd" id="saV-qf-N4x"/>
                                             </connections>
@@ -804,10 +804,14 @@
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" sceneMemberID="viewController">
-                    <view key="view" id="m2S-Jp-Qdl" customClass="SlideView">
+                    <view key="view" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="647" height="442"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D3G-Yb-zCo">
+                                <rect key="frame" x="3" y="10" width="641" height="381"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="groove" id="QBA-PH-HyM"/>
+                            </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yfV-A1-TV3">
                                 <rect key="frame" x="18" y="425" width="444" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(picture path)" id="YVc-Lw-3kj">
@@ -824,13 +828,9 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D3G-Yb-zCo">
-                                <rect key="frame" x="3" y="10" width="641" height="381"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="groove" id="QBA-PH-HyM"/>
-                            </imageView>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O9U-t7-RGu">
-                                <rect key="frame" x="6" y="366" width="96" height="22"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="8zJ-wA-VOj">
+                                <rect key="frame" x="6" y="366" width="162" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Click here to get started" drawsBackground="YES" id="8zJ-wA-VOj">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

@@ -21,14 +21,6 @@
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
 }
-
-//- (IBAction)toolbarAction:(id)sender {
-//}
-//- (IBAction)menuItemAction:(id)sender {
-//}
-//- (IBAction)keyUp:(NSEvent *)theEvent {
-//}
-
 @end
 
 //@implementation NSApplication (NSResponderHandler)
