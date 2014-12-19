@@ -98,6 +98,10 @@ NSMutableArray *history;
 }
 
 
+
+
+
+
 #pragma mark "Internal"
 // TODO: split these out to another class?
 
@@ -397,6 +401,8 @@ NSMutableArray *history;
         case 10: // help
             [self underConstruction];
             break;
+            
+// TODO add cases 21-24, 31-34, 41-42
         default:
             break;
     }
