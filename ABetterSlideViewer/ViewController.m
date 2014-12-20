@@ -61,6 +61,10 @@ NSMutableArray *history;
         destinationTopPath = keyValue;
         self.destinationPath.stringValue = destinationTopPath;
     }
+
+    // TODO base this on a user preference
+    playInterval = 2.0f;
+    [self setPlayIntervalMenu: 21 tagStart:21 tagEnd:24];
     
     history = [[NSMutableArray alloc] init];
 }
@@ -97,7 +101,27 @@ NSMutableArray *history;
     [self handleAction:[sender tag]];
 }
 
-
+- (void) setPlayIntervalMenu:(NSInteger)tag tagStart:(NSInteger)tagStart tagEnd:(NSInteger)tagEnd
+{
+    NSMenu *mainMenu = [[NSApplication sharedApplication] mainMenu];
+    for (NSMenuItem *item in [mainMenu itemArray]) {
+        if ([[item title] isEqualToString:@"Settings"]) {
+            NSMenu *subMenu = [item submenu];
+            for (NSMenuItem *subItem in [subMenu itemArray]) {
+                NSLog(@"%@", [subItem title]);
+                if (tagStart <= subItem.tag && subItem.tag <= tagEnd) {
+                    [subItem setState:0];
+                }
+                if (subItem.tag == tag) {
+                    [subItem setState:1];
+                }
+            }
+           
+        }
+    }
+    
+    // TODO: set this as a user preference
+}
 
 
 
@@ -402,7 +426,45 @@ NSMutableArray *history;
             [self underConstruction];
             break;
             
-// TODO add cases 21-24, 31-34, 41-42
+        case 21: // play interval - 2s
+            [self pause];
+            playInterval = 2.0f;
+            [self setPlayIntervalMenu: tag tagStart:21 tagEnd:24];
+            [self play];
+            break;
+        case 22: // play interval - 10s
+            [self pause];
+           playInterval = 10.0f;
+            [self setPlayIntervalMenu: tag tagStart:21 tagEnd:24];
+            [self play];
+            break;
+        case 23: // play interval - 30s
+            [self pause];
+           playInterval = 30.0f;
+            [self setPlayIntervalMenu: tag tagStart:21 tagEnd:24];
+            [self play];
+            break;
+        case 24: // play interval - 1m
+            [self pause];
+           playInterval = 60.0f;
+            [self setPlayIntervalMenu: tag tagStart:21 tagEnd:24];
+            [self play];
+            break;
+
+        case 31: // copy type - mirror
+            break;
+        case 32: // copy type - by month
+            break;
+        case 33: // copy type - by year
+            break;
+        case 34: // copy type - single folder
+            break;
+
+        case 41: // date by - folder name
+            break;
+        case 42: // date by - meta data
+            break;
+
         default:
             break;
     }
