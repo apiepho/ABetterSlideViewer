@@ -37,6 +37,10 @@ NSMutableArray *history;
 
     // Do any additional setup after loading the view.
     
+    // DEBUG: Use this to clear User defaults for program
+    //NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    //[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    
     // Set text and all background colors
     [self.view setWantsLayer: YES];
     [self.view.layer setBackgroundColor: [NSColor blackColor].CGColor];
