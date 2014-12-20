@@ -36,6 +36,8 @@ NSMutableArray *history;
     [super viewDidLoad];
 
     // Do any additional setup after loading the view.
+    
+    // Set text and all background colors
     [self.view setWantsLayer: YES];
     [self.view.layer setBackgroundColor: [NSColor blackColor].CGColor];
     [self.sourcePath setTextColor:[NSColor whiteColor]];
@@ -49,6 +51,7 @@ NSMutableArray *history;
     [self.focusTextField setAlphaValue:1.0];
     [self.focusTextField setFocusRingType:NSFocusRingTypeNone];
 
+    // Get user preferences for source and destination
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSString *keyValue;
     keyValue = [prefs stringForKey:@"keyForSourceTopPath"];
@@ -62,10 +65,19 @@ NSMutableArray *history;
         self.destinationPath.stringValue = destinationTopPath;
     }
 
-    // TODO base this on a user preference
+    // Set default play interval
     playInterval = 2.0f;
-    [self setPlayIntervalMenu: 21 tagStart:21 tagEnd:24];
-    
+    [self setSelectedInMenuRange: 21 tagStart:21 tagEnd:24];
+    // Get user preferences for play interval
+    keyValue = [prefs stringForKey:@"keyForPlayInterval"];
+    if (keyValue != nil) {
+        playInterval = [keyValue floatValue];
+     }
+    keyValue = [prefs stringForKey:@"keyForPlayIntervalTag"];
+    if (keyValue != nil) {
+        [self setSelectedInMenuRange:[keyValue integerValue] tagStart:21 tagEnd:24];
+    }
+ 
     history = [[NSMutableArray alloc] init];
 }
 
@@ -101,14 +113,14 @@ NSMutableArray *history;
     [self handleAction:[sender tag]];
 }
 
-- (void) setPlayIntervalMenu:(NSInteger)tag tagStart:(NSInteger)tagStart tagEnd:(NSInteger)tagEnd
+- (void) setSelectedInMenuRange:(NSInteger)tag tagStart:(NSInteger)tagStart tagEnd:(NSInteger)tagEnd
 {
     NSMenu *mainMenu = [[NSApplication sharedApplication] mainMenu];
     for (NSMenuItem *item in [mainMenu itemArray]) {
         if ([[item title] isEqualToString:@"Settings"]) {
             NSMenu *subMenu = [item submenu];
             for (NSMenuItem *subItem in [subMenu itemArray]) {
-                NSLog(@"%@", [subItem title]);
+                //NSLog(@"%@", [subItem title]);
                 if (tagStart <= subItem.tag && subItem.tag <= tagEnd) {
                     [subItem setState:0];
                 }
@@ -116,11 +128,8 @@ NSMutableArray *history;
                     [subItem setState:1];
                 }
             }
-           
         }
     }
-    
-    // TODO: set this as a user preference
 }
 
 
@@ -381,6 +390,36 @@ NSMutableArray *history;
     }
 }
 
+- (void) setPlayInterval:(NSInteger) tag {
+    [self pause];
+    switch (tag) {
+        case 21: // play interval - 2s
+            playInterval = 2.0f;
+            break;
+        case 22: // play interval - 10s
+            playInterval = 10.0f;
+            break;
+        case 23: // play interval - 30s
+            playInterval = 30.0f;
+            break;
+        case 24: // play interval - 1m
+            playInterval = 60.0f;
+            break;
+        default:
+            break;
+    }
+    [self setSelectedInMenuRange: tag tagStart:21 tagEnd:24];
+
+    NSString *str;
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    str = [NSString stringWithFormat:@"%f", playInterval];
+    [prefs setObject:str forKey:@"keyForPlayInterval"];
+    str = [NSString stringWithFormat:@"%ld", tag];
+    [prefs setObject:str forKey:@"keyForPlayIntervalTag"];
+    
+    [self play];
+}
+
 - (void)handleAction:(NSInteger)tag {
     switch (tag) {
         case 1: // source
@@ -427,28 +466,10 @@ NSMutableArray *history;
             break;
             
         case 21: // play interval - 2s
-            [self pause];
-            playInterval = 2.0f;
-            [self setPlayIntervalMenu: tag tagStart:21 tagEnd:24];
-            [self play];
-            break;
         case 22: // play interval - 10s
-            [self pause];
-           playInterval = 10.0f;
-            [self setPlayIntervalMenu: tag tagStart:21 tagEnd:24];
-            [self play];
-            break;
         case 23: // play interval - 30s
-            [self pause];
-           playInterval = 30.0f;
-            [self setPlayIntervalMenu: tag tagStart:21 tagEnd:24];
-            [self play];
-            break;
         case 24: // play interval - 1m
-            [self pause];
-           playInterval = 60.0f;
-            [self setPlayIntervalMenu: tag tagStart:21 tagEnd:24];
-            [self play];
+            [self setPlayInterval: tag];
             break;
 
         case 31: // copy type - mirror
@@ -484,6 +505,10 @@ NSMutableArray *history;
 // - black behind image
 // - better images for toolbar buttons
 // - image for app
+
+// TODO - CODE
+// - replace magic numbers with constants
+// - refactor this file into controller and model, seperate files (this getting to long)
 
 // - installer
 // - sign app
