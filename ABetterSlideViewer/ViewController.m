@@ -20,14 +20,50 @@
 
 @implementation ViewController
 
+const float PLAY_INTERVAL_2S            = 2.0f;
+const float PLAY_INTERVAL_10S           = 10.0f;
+const float PLAY_INTERVAL_30S           = 30.0f;
+const float PLAY_INTERVAL_1M            = 60.0f;
+
+const NSInteger TAG_SOURCE              = 1;
+const NSInteger TAG_DESTINATION         = 2;
+const NSInteger TAG_PLAYPAUSE           = 3;
+const NSInteger TAG_NEXT                = 4;
+const NSInteger TAG_PREVIOUS            = 5;
+const NSInteger TAG_NEXTFOLDER          = 7;
+const NSInteger TAG_PREVFOLDER          = 6;
+const NSInteger TAG_COPY                = 8;
+const NSInteger TAG_UNDO                = 9;
+const NSInteger TAG_HELP                = 10;
+const NSInteger TAG_PLAYINTERVAL_START  = 21;
+const NSInteger TAG_PLAYINTERVAL_2S     = 21;
+const NSInteger TAG_PLAYINTERVAL_10S    = 22;
+const NSInteger TAG_PLAYINTERVAL_30S    = 23;
+const NSInteger TAG_PLAYINTERVAL_1M     = 24;
+const NSInteger TAG_PLAYINTERVAL_END    = 24;
+const NSInteger TAG_COPYTYPE_START      = 31;
+const NSInteger TAG_COPYTYPE_MIRROR     = 31;
+const NSInteger TAG_COPYTYPE_BYMONTH    = 32;
+const NSInteger TAG_COPYTYPE_BYYEAR     = 33;
+const NSInteger TAG_COPYTYPE_SINGLEFLDR = 34;
+const NSInteger TAG_COPYTYPE_END        = 34;
+const NSInteger TAG_DATEBY_START        = 41;
+const NSInteger TAG_DATEBY_FOLDER       = 41;
+const NSInteger TAG_DATEBY_META         = 42;
+const NSInteger TAG_DATEBY_END          = 42;
+
+
 NSString *destinationTopPath;
 NSString *sourceTopPath;
 NSMutableArray *sourcePaths;
 NSInteger currentIndex = -1;
 
-float playInterval = 2.0f;
+float playInterval = PLAY_INTERVAL_2S;
 NSTimer *playTimer = nil;
 bool playRunning = false;
+
+NSInteger copyType = TAG_COPYTYPE_MIRROR;
+NSInteger dateBy = TAG_DATEBY_FOLDER;
 
 NSMutableArray *history;
 
@@ -70,8 +106,8 @@ NSMutableArray *history;
     }
 
     // Set default play interval
-    playInterval = 2.0f;
-    [self setSelectedInMenuRange: 21 tagStart:21 tagEnd:24];
+    playInterval = PLAY_INTERVAL_2S;
+    [self setSelectedInMenuRange: PLAY_INTERVAL_2S tagStart:TAG_PLAYINTERVAL_START tagEnd:TAG_PLAYINTERVAL_END];
     // Get user preferences for play interval
     keyValue = [prefs stringForKey:@"keyForPlayInterval"];
     if (keyValue != nil) {
@@ -79,9 +115,29 @@ NSMutableArray *history;
      }
     keyValue = [prefs stringForKey:@"keyForPlayIntervalTag"];
     if (keyValue != nil) {
-        [self setSelectedInMenuRange:[keyValue integerValue] tagStart:21 tagEnd:24];
+        [self setSelectedInMenuRange:[keyValue integerValue] tagStart:TAG_PLAYINTERVAL_START tagEnd:TAG_PLAYINTERVAL_END];
     }
  
+    // Set default copy type
+    copyType = TAG_COPYTYPE_MIRROR;
+    [self setSelectedInMenuRange: TAG_COPYTYPE_MIRROR tagStart:TAG_COPYTYPE_START tagEnd:TAG_COPYTYPE_END];
+    // Get user preferences for copy type
+    keyValue = [prefs stringForKey:@"keyForCopyTypeTag"];
+    if (keyValue != nil) {
+        copyType = [keyValue intValue];
+        [self setSelectedInMenuRange:copyType tagStart:TAG_COPYTYPE_START tagEnd:TAG_COPYTYPE_END];
+    }
+
+    // Set default date by
+    dateBy = TAG_DATEBY_FOLDER;
+    [self setSelectedInMenuRange: TAG_DATEBY_FOLDER tagStart:TAG_DATEBY_START tagEnd:TAG_DATEBY_END];
+    // Get user preferences for date by
+    keyValue = [prefs stringForKey:@"keyForDateByTag"];
+    if (keyValue != nil) {
+        dateBy = [keyValue intValue];
+        [self setSelectedInMenuRange:dateBy tagStart:TAG_DATEBY_START tagEnd:TAG_DATEBY_END];
+    }
+
     history = [[NSMutableArray alloc] init];
 }
 
@@ -93,9 +149,9 @@ NSMutableArray *history;
     [self.focusTextField setAlphaValue:0.0];
     NSInteger tag = 0;
     switch ([theEvent.characters characterAtIndex:0]) {
-        case ' ': tag = 3; break; // play/pause
-        case 'c': tag = 8; break; // copy
-        case 'u': tag = 9; break; // undo
+        case ' ': tag = TAG_PLAYPAUSE;  break;
+        case 'c': tag = TAG_COPY;       break;
+        case 'u': tag = TAG_UNDO;       break;
     }
     [self.focusTextField setStringValue:@""];
     [self handleAction:tag];
@@ -360,21 +416,116 @@ NSMutableArray *history;
     }
 }
 
+- (NSString *) getUniquePathname:(NSString *) given {
+    NSString *temp;
+    NSString *working;
+    NSString *result;
+
+    working = [given stringByAppendingString:@""];
+    int count = 1;
+    while ([[NSFileManager defaultManager] fileExistsAtPath:working]) {
+        // start with given
+        working = [given stringByAppendingString:@""];
+        // get extension
+        temp = [@"." stringByAppendingString:[working pathExtension]];
+        // remove extension
+        working = [working stringByReplacingOccurrencesOfString:temp withString:@""];
+        // add -<count>
+        working = [working stringByAppendingFormat:@"-%d", count];
+        // add back extension
+        working = [working stringByAppendingString:temp];
+        count++;
+    }
+    result = [working stringByAppendingString:@""];
+    return result;
+}
+
+- (NSString *) getDestinationPath:(NSString *) srcPath {
+    NSString *result;
+    NSString *temp1;
+    NSString *temp2;
+
+    // use mirror form as default
+    result = [srcPath stringByReplacingOccurrencesOfString:sourceTopPath withString:destinationTopPath];
+
+    switch (copyType) {
+        case TAG_COPYTYPE_MIRROR:
+            // use default
+            break;
+        case TAG_COPYTYPE_BYMONTH:
+            {
+                // assume last folder is named with a date like 2014-01(Jan)...
+                // will copy to <dest>/<yyyy>/<mm>
+                // grab string for last
+                temp1 = [result stringByDeletingLastPathComponent];
+                temp2 = [temp1 lastPathComponent];
+                // parse for year and month
+                NSScanner *parser = [NSScanner scannerWithString:temp2];
+                int year;
+                int month;
+                [parser scanInt:&year];
+                [parser scanString:@"-" intoString:nil];
+                [parser scanInt:&month];
+                // build new dest path from year and month
+                temp1 = [@"" stringByAppendingFormat:@"%04d", year];
+                temp2 = [@"" stringByAppendingFormat:@"%02d", month];
+                result = [destinationTopPath stringByAppendingPathComponent:temp1];
+                result = [result stringByAppendingPathComponent:temp2];
+                // append actual filename
+                result = [result stringByAppendingPathComponent:[srcPath lastPathComponent]];
+            }
+            break;
+        case TAG_COPYTYPE_BYYEAR:
+            {
+                // assume last folder is named with a date like 2014-01(Jan)...
+                // will copy to <dest>/<yyyy>
+                // grab string for last
+                temp1 = [result stringByDeletingLastPathComponent];
+                temp2 = [temp1 lastPathComponent];
+                // parse for year and month
+                NSScanner *parser = [NSScanner scannerWithString:temp2];
+                int year;
+                [parser scanInt:&year];
+                // build new dest path from year and month
+                temp1 = [@"" stringByAppendingFormat:@"%04d", year];
+                result = [destinationTopPath stringByAppendingPathComponent:temp1];
+                // append actual filename
+                result = [result stringByAppendingPathComponent:[srcPath lastPathComponent]];
+            }
+            break;
+        case TAG_COPYTYPE_SINGLEFLDR:
+            {
+                // copy all images to single file, change img.jpg to img-1.jpg if neccessary
+                temp1 = [srcPath lastPathComponent];
+                result = [destinationTopPath stringByAppendingPathComponent:temp1];
+           }
+            break;
+    }
+
+    result = [self getUniquePathname: result];
+    return result;
+}
+
 - (void) copyCurrent {
     if (self.destinationPath != nil) {
         NSError *error;;
         NSString *srcPath = sourcePaths[currentIndex];
-        NSString *dstPath = [srcPath stringByReplacingOccurrencesOfString:sourceTopPath withString:destinationTopPath];
+        NSString *dstPath = [self getDestinationPath: srcPath];
         NSString *dstPathBase = [dstPath stringByDeletingLastPathComponent];
 
+        if (dstPath == nil) {
+            NSLog(@"ERROR: COPY: dstPath is nil");
+            return;
+        }
+        
         if (![[NSFileManager defaultManager] fileExistsAtPath:dstPath]) {
             BOOL success;
             success = [[NSFileManager defaultManager] createDirectoryAtPath:dstPathBase withIntermediateDirectories:YES attributes:nil error:&error];
             if (success) {
                 success = [[NSFileManager defaultManager] copyItemAtPath:srcPath toPath:dstPath error:&error];
                 if (success) {
-                    //NSLog(@"COPY: source      file: %@", srcPath);
-                    //NSLog(@"COPY: destination file: %@", dstPath);
+                    NSLog(@"COPY: source      file: %@", srcPath);
+                    NSLog(@"COPY: destination file: %@", dstPath);
                     [history addObject:dstPath];
                 }
             }
@@ -397,22 +548,22 @@ NSMutableArray *history;
 - (void) setPlayInterval:(NSInteger) tag {
     [self pause];
     switch (tag) {
-        case 21: // play interval - 2s
-            playInterval = 2.0f;
+        case TAG_PLAYINTERVAL_2S:
+            playInterval = PLAY_INTERVAL_2S;
             break;
-        case 22: // play interval - 10s
-            playInterval = 10.0f;
+        case TAG_PLAYINTERVAL_10S:
+            playInterval = PLAY_INTERVAL_10S;
             break;
-        case 23: // play interval - 30s
-            playInterval = 30.0f;
+        case TAG_PLAYINTERVAL_30S:
+            playInterval = PLAY_INTERVAL_30S;
             break;
-        case 24: // play interval - 1m
-            playInterval = 60.0f;
+        case TAG_PLAYINTERVAL_1M:
+            playInterval = PLAY_INTERVAL_1M;
             break;
         default:
             break;
     }
-    [self setSelectedInMenuRange: tag tagStart:21 tagEnd:24];
+    [self setSelectedInMenuRange: tag tagStart:TAG_PLAYINTERVAL_START tagEnd:TAG_PLAYINTERVAL_END];
 
     NSString *str;
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -424,70 +575,88 @@ NSMutableArray *history;
     [self play];
 }
 
+- (void) setCopyType:(NSInteger) tag {
+    copyType = tag;
+    [self setSelectedInMenuRange: tag tagStart:TAG_COPYTYPE_START tagEnd:TAG_COPYTYPE_END];
+    
+    NSString *str;
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    str = [NSString stringWithFormat:@"%ld", tag];
+    [prefs setObject:str forKey:@"keyForCopyTypeTag"];
+}
+
+- (void) setDateBy:(NSInteger) tag {
+    dateBy = tag;
+    [self setSelectedInMenuRange: tag tagStart:TAG_DATEBY_START tagEnd:TAG_DATEBY_END];
+    
+    NSString *str;
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    str = [NSString stringWithFormat:@"%ld", tag];
+    [prefs setObject:str forKey:@"keyForDateByTag"];
+}
+
 - (void)handleAction:(NSInteger)tag {
     switch (tag) {
-        case 1: // source
+        case TAG_SOURCE:
             [self pickSource];
             break;
-        case 2: // destination
+        case TAG_DESTINATION:
             [self pickDestination];
             break;
-        case 3: // play
+        case TAG_PLAYPAUSE:
             [self playPause];
             break;
-        case 4: // next
+        case TAG_NEXT:
             // pause, op, play to keep timing of play in sync
             [self pause];
             [self nextImage];
             [self play];
             break;
-        case 5: // prev
+        case TAG_PREVIOUS:
             // pause, op, play to keep timing of play in sync
             [self pause];
             [self previousImage];
             [self play];
             break;
-        case 7: // next folder
+        case TAG_NEXTFOLDER:
             // pause, op, play to keep timing of play in sync
             [self pause];
             [self nextDirectory];
             [self play];
             break;
-        case 6: // previous folder
+        case TAG_PREVFOLDER:
             // pause, op, play to keep timing of play in sync
             [self pause];
             [self previousDirectory];
             [self play];
             break;
-        case 8: // copy
+        case TAG_COPY:
             [self copyCurrent];
             break;
-        case 9: // undo
+        case TAG_UNDO:
             [self undoCopy];
             break;
-        case 10: // help
+        case TAG_HELP:
             [self underConstruction];
             break;
             
-        case 21: // play interval - 2s
-        case 22: // play interval - 10s
-        case 23: // play interval - 30s
-        case 24: // play interval - 1m
+        case TAG_PLAYINTERVAL_2S:
+        case TAG_PLAYINTERVAL_10S:
+        case TAG_PLAYINTERVAL_30S:
+        case TAG_PLAYINTERVAL_1M:
             [self setPlayInterval: tag];
             break;
 
-        case 31: // copy type - mirror
-            break;
-        case 32: // copy type - by month
-            break;
-        case 33: // copy type - by year
-            break;
-        case 34: // copy type - single folder
+        case TAG_COPYTYPE_MIRROR:
+        case TAG_COPYTYPE_BYMONTH:
+        case TAG_COPYTYPE_BYYEAR:
+        case TAG_COPYTYPE_SINGLEFLDR:
+            [self setCopyType: tag];
             break;
 
-        case 41: // date by - folder name
-            break;
-        case 42: // date by - meta data
+        case TAG_DATEBY_FOLDER:
+        case TAG_DATEBY_META:
+            [self setDateBy: tag];
             break;
 
         default:
@@ -501,8 +670,10 @@ NSMutableArray *history;
 // TODO - FEATURES
 // - menu options for
 //      type of copy (mirror vs by month)
-//      speed of play
 //      background colors
+//      add option to enter folder date pattern
+// - implement date by
+// - refactor copy type
 
 // TODO - UI
 // - fix first responder for toolbar and menubar someday
@@ -511,7 +682,6 @@ NSMutableArray *history;
 // - image for app
 
 // TODO - CODE
-// - replace magic numbers with constants
 // - refactor this file into controller and model, seperate files (this getting to long)
 
 // - installer
