@@ -51,6 +51,7 @@ const NSInteger TAG_DATEBY_START        = 41;
 const NSInteger TAG_DATEBY_FOLDER       = 41;
 const NSInteger TAG_DATEBY_META         = 42;
 const NSInteger TAG_DATEBY_END          = 42;
+const NSInteger TAG_IMAGE_INFO          = 51;
 
 
 NSString *destinationTopPath;
@@ -151,6 +152,7 @@ NSMutableArray *history;
     switch ([theEvent.characters characterAtIndex:0]) {
         case ' ': tag = TAG_PLAYPAUSE;  break;
         case 'c': tag = TAG_COPY;       break;
+        case 'i': tag = TAG_IMAGE_INFO; break;
         case 'u': tag = TAG_UNDO;       break;
     }
     [self.focusTextField setStringValue:@""];
@@ -595,6 +597,34 @@ NSMutableArray *history;
     [prefs setObject:str forKey:@"keyForDateByTag"];
 }
 
+
+- (void) currentImageInfo {
+    // TODO create image info window that can be reused for each image
+    NSDictionary* exif = nil;
+    NSURL* url = [NSURL fileURLWithPath: sourcePaths[currentIndex]];
+
+    // get handle
+    CGImageSourceRef source = CGImageSourceCreateWithURL ( (__bridge CFURLRef) url, NULL);
+    if (source) {
+        // get image properties
+        CFDictionaryRef metadata = CGImageSourceCopyPropertiesAtIndex(source, 0, NULL);
+        if (metadata) {
+            // cast to NSDictionary
+            exif = [NSDictionary dictionaryWithDictionary : (__bridge NSDictionary *)metadata];
+            CFRelease (metadata);
+        }
+        CFRelease(source);
+        source = nil;
+    }
+    NSLog(@"%@", exif);
+    // example of parsing exif dictionary
+    // using photo frm Lumina 928, the values are reversed
+    float latitude = [[[exif objectForKey:@"{GPS}"] valueForKey:@"Latitude"] floatValue];
+    float longitude = [[[exif objectForKey:@"{GPS}"] valueForKey:@"Longitude"] floatValue];
+    NSLog(@"GPS Longitude, Latitude:  %f, %f", longitude, latitude);
+
+}
+
 - (void)handleAction:(NSInteger)tag {
     switch (tag) {
         case TAG_SOURCE:
@@ -659,6 +689,10 @@ NSMutableArray *history;
             [self setDateBy: tag];
             break;
 
+        case TAG_IMAGE_INFO:
+            [self currentImageInfo];
+            break;
+            
         default:
             break;
     }
