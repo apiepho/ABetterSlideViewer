@@ -69,7 +69,6 @@ NSMutableArray *history;
     return self;
 }
 
-
 - (void) loadPaths {
     
     if (_sourceTopPath != nil) {
@@ -268,10 +267,65 @@ NSMutableArray *history;
     return result;
 }
 
-- (NSString *) getDestinationPath:(NSString *) srcPath {
+- (void) getCopyDateInfo:(NSString *)srcPath year:(int *)year month:(int *)month {
+    NSString *temp1;
+    NSString *temp2;
+    
+    *year = 2000;
+    *month = 1;
+
+    switch (_dateByTag) {
+        case TAG_DATEBY_META:
+            {
+                NSDictionary* exif = nil;
+                NSURL* url = [NSURL fileURLWithPath: srcPath];
+                CGImageSourceRef source = CGImageSourceCreateWithURL ( (__bridge CFURLRef) url, NULL);
+                if (source) {
+                    // get image properties
+                    CFDictionaryRef metadata = CGImageSourceCopyPropertiesAtIndex(source, 0, NULL);
+                    if (metadata) {
+                        // cast to NSDictionary
+                        exif = [NSDictionary dictionaryWithDictionary : (__bridge NSDictionary *)metadata];
+                        CFRelease (metadata);
+                    }
+                    CFRelease(source);
+                    source = nil;
+                }
+                temp1 = [[exif objectForKey:@"{Exif}"] valueForKey:@"DateTimeOriginal"];
+                if (temp1 != nil) {
+                    NSScanner *parser = [NSScanner scannerWithString:temp1];
+                    [parser scanInt:year];
+                    [parser scanString:@":" intoString:nil];
+                    [parser scanInt:month];
+                    return;
+                }
+            }
+            // intentionally fall thru if exif date not found
+            //break;
+        case TAG_DATEBY_FOLDER:
+            {
+                // assume last folder is named with a date like 2014-01(Jan)...
+                // will copy to <dest>/<yyyy>/<mm>
+                // grab string for last
+                temp1 = [srcPath stringByDeletingLastPathComponent];
+                temp2 = [temp1 lastPathComponent];
+                // parse for year and month
+                NSScanner *parser = [NSScanner scannerWithString:temp2];
+                [parser scanInt:year];
+                [parser scanString:@"-" intoString:nil];
+                [parser scanInt:month];
+            }
+            break;
+    }
+}
+
+
+- (NSString *) getCopyDestinationPath:(NSString *) srcPath {
     NSString *result;
     NSString *temp1;
     NSString *temp2;
+    int year;
+    int month;
     
     // use mirror form as default
     result = [srcPath stringByReplacingOccurrencesOfString:_sourceTopPath withString:_destinationTopPath];
@@ -282,18 +336,7 @@ NSMutableArray *history;
             break;
         case TAG_COPYTYPE_BYMONTH:
         {
-            // assume last folder is named with a date like 2014-01(Jan)...
-            // will copy to <dest>/<yyyy>/<mm>
-            // grab string for last
-            temp1 = [result stringByDeletingLastPathComponent];
-            temp2 = [temp1 lastPathComponent];
-            // parse for year and month
-            NSScanner *parser = [NSScanner scannerWithString:temp2];
-            int year;
-            int month;
-            [parser scanInt:&year];
-            [parser scanString:@"-" intoString:nil];
-            [parser scanInt:&month];
+            [self getCopyDateInfo:srcPath year: &year month: &month];
             // build new dest path from year and month
             temp1 = [@"" stringByAppendingFormat:@"%04d", year];
             temp2 = [@"" stringByAppendingFormat:@"%02d", month];
@@ -305,15 +348,7 @@ NSMutableArray *history;
             break;
         case TAG_COPYTYPE_BYYEAR:
         {
-            // assume last folder is named with a date like 2014-01(Jan)...
-            // will copy to <dest>/<yyyy>
-            // grab string for last
-            temp1 = [result stringByDeletingLastPathComponent];
-            temp2 = [temp1 lastPathComponent];
-            // parse for year and month
-            NSScanner *parser = [NSScanner scannerWithString:temp2];
-            int year;
-            [parser scanInt:&year];
+            [self getCopyDateInfo:srcPath year: &year month: &month];
             // build new dest path from year and month
             temp1 = [@"" stringByAppendingFormat:@"%04d", year];
             result = [_destinationTopPath stringByAppendingPathComponent:temp1];
@@ -338,7 +373,7 @@ NSMutableArray *history;
     if (self.destinationTopPath != nil) {
         NSError *error;;
         NSString *srcPath = sourcePaths[currentIndex];
-        NSString *dstPath = [self getDestinationPath: srcPath];
+        NSString *dstPath = [self getCopyDestinationPath: srcPath];
         NSString *dstPathBase = [dstPath stringByDeletingLastPathComponent];
         
         if (dstPath == nil) {
@@ -525,11 +560,7 @@ NSMutableArray *history;
 
 // TODO - FEATURES
 // - menu options for
-//      type of copy (mirror vs by month)
 //      background colors
-//      add option to enter folder date pattern
-// - implement date by
-// - refactor copy type
 // - user image for app, for toobar buttons
 // - image info as window, pop up
 // - move source and destination labels to pop up? or optionally overlay on image transparently
