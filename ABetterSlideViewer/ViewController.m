@@ -11,8 +11,6 @@
 #import "ImageInfoWindowController.h"
 
 @interface ViewController()
-@property (strong) IBOutlet NSTextField *sourcePath;
-@property (strong) IBOutlet NSTextField *destinationPath;
 @property (strong) IBOutlet NSImageView *imageView;
 
 // HACK to get first responder actions so menu items are enabledd
@@ -40,8 +38,6 @@ ImageInfoWindowController *imageInfoWindowController;
     // Set text and all background colors
     [self.view setWantsLayer: YES];
     [self.view.layer setBackgroundColor: [NSColor blackColor].CGColor];
-    [self.sourcePath setTextColor:[NSColor whiteColor]];
-    [self.destinationPath setTextColor:[NSColor whiteColor]];
     [self.imageView setWantsLayer: YES];
     [self.imageView.layer setBackgroundColor: [NSColor blackColor].CGColor];
 
@@ -61,8 +57,6 @@ ImageInfoWindowController *imageInfoWindowController;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleModelNotification:) name:@"ImageInformation" object:nil];
     
     model = [[SlideViewerModel alloc] init];
-    self.sourcePath.stringValue = model.sourceTopPath;
-    self.destinationPath.stringValue = model.destinationTopPath;
     [self setSelectedInMenuRange: model.playIntervalTag tagStart:TAG_PLAYINTERVAL_START tagEnd:TAG_PLAYINTERVAL_END];
     [self setSelectedInMenuRange: model.copyTypeTag tagStart:TAG_COPYTYPE_START tagEnd:TAG_COPYTYPE_END];
     [self setSelectedInMenuRange: model.dateByTag tagStart:TAG_DATEBY_START tagEnd:TAG_DATEBY_END];
@@ -80,7 +74,6 @@ ImageInfoWindowController *imageInfoWindowController;
 {
     //NSLog(@"handleModelNotification: %@", [pNotification name]);
     if ([[pNotification name] isEqualToString:@"UpdateSourceLabel"]) {
-        self.sourcePath.stringValue = (NSString *)[pNotification object];
         [self updateImageInfoWindow];
     }
 //    else if ([[pNotification name] isEqualToString:@"UpdateDestinationLabel"]) {
@@ -196,8 +189,6 @@ ImageInfoWindowController *imageInfoWindowController;
             NSURL *selection = [panel URL];
             model.destinationTopPath = [selection.path stringByResolvingSymlinksInPath];
             //NSLog(@"destination TOP path: %@", destinationTopPath);
-            
-            self.destinationPath.stringValue = model.destinationTopPath;
             
             // TODO: move setting pref into model
             NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];

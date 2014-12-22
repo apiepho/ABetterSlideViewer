@@ -584,11 +584,8 @@ NSMutableArray *history;
 // - menu options for
 //      background colors
 // - user image for app, for toobar buttons
-// - image info as window,
-// - move source and destination labels to window
 // - close and reopen info window
 // - src /dest labels for info window
-// - scroll for info
 // - save pref of window open
 // - move pref from view controller to model?
 
