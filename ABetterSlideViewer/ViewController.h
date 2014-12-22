@@ -13,7 +13,5 @@
 - (IBAction)toolbarAction:(id)sender;
 - (IBAction) menuItemAction:(id)sender;
 
-- (IBAction)keyUp:(NSEvent *)theEvent;
-
 @end
 
