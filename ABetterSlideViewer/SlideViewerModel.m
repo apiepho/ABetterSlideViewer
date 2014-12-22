@@ -93,9 +93,9 @@ NSMutableArray *history;
 - (void) updateImage {
     if (currentIndex == -1) return;
     if (sourcePaths.count == 0) return;
-    NSString *name = sourcePaths[currentIndex];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateSourceLabel" object:name];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateImage" object:name];
+    _sourcePath = sourcePaths[currentIndex];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateSourceLabel" object:_sourcePath];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateImage" object:_sourcePath];
 }
 
 - (void) nextImage {
@@ -106,8 +106,6 @@ NSMutableArray *history;
 }
 
 - (void) previousImage {
-    NSString *name = sourcePaths[currentIndex];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateSourceLabel" object:name];
     currentIndex--;
     if (currentIndex < 0)
         currentIndex = sourcePaths.count-1;
@@ -459,8 +457,42 @@ NSMutableArray *history;
 }
 
 
-- (void) currentImageInfo {
-    // TODO create image info window that can be reused for each image
+//- (void) currentImageInfo {
+//    // TODO create image info window that can be reused for each image
+//    NSDictionary* exif = nil;
+//    NSURL* url = [NSURL fileURLWithPath: sourcePaths[currentIndex]];
+//    
+//    // get handle
+//    CGImageSourceRef source = CGImageSourceCreateWithURL ( (__bridge CFURLRef) url, NULL);
+//    if (source) {
+//        // get image properties
+//        CFDictionaryRef metadata = CGImageSourceCopyPropertiesAtIndex(source, 0, NULL);
+//        if (metadata) {
+//            // cast to NSDictionary
+//            exif = [NSDictionary dictionaryWithDictionary : (__bridge NSDictionary *)metadata];
+//            CFRelease (metadata);
+//        }
+//        CFRelease(source);
+//        source = nil;
+//    }
+//    NSLog(@"%@", exif);
+//    // example of parsing exif dictionary
+//    float latitude = [[[exif objectForKey:@"{GPS}"] valueForKey:@"Latitude"] floatValue];
+//    float longitude = [[[exif objectForKey:@"{GPS}"] valueForKey:@"Longitude"] floatValue];
+//    NSString *latitudeRef = [[exif objectForKey:@"{GPS}"] valueForKey:@"LatitudeRef"];
+//    NSString *longitudeRef = [[exif objectForKey:@"{GPS}"] valueForKey:@"LongitudeRef"];
+//    if ([latitudeRef isEqualToString:@"S"])
+//        latitude *= -1;
+//    if ([longitudeRef isEqualToString:@"W"])
+//        longitude *= -1;
+//    NSLog(@"GPS Latitude, Longitude:  %f, %f", latitude, longitude);
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"ImageInformation" object:nil];
+//    
+//}
+
+- (NSString *) getCurrentImageInfo {
+    NSString *result;
+    
     NSDictionary* exif = nil;
     NSURL* url = [NSURL fileURLWithPath: sourcePaths[currentIndex]];
     
@@ -477,18 +509,8 @@ NSMutableArray *history;
         CFRelease(source);
         source = nil;
     }
-    NSLog(@"%@", exif);
-    // example of parsing exif dictionary
-    float latitude = [[[exif objectForKey:@"{GPS}"] valueForKey:@"Latitude"] floatValue];
-    float longitude = [[[exif objectForKey:@"{GPS}"] valueForKey:@"Longitude"] floatValue];
-    NSString *latitudeRef = [[exif objectForKey:@"{GPS}"] valueForKey:@"LatitudeRef"];
-    NSString *longitudeRef = [[exif objectForKey:@"{GPS}"] valueForKey:@"LongitudeRef"];
-    if ([latitudeRef isEqualToString:@"S"])
-        latitude *= -1;
-    if ([longitudeRef isEqualToString:@"W"])
-        longitude *= -1;
-    NSLog(@"GPS Latitude, Longitude:  %f, %f", latitude, longitude);
-    
+    result = [NSString stringWithFormat:@"%@", exif];
+    return result;
 }
 
 - (void)handleAction:(NSInteger)tag {
@@ -547,7 +569,7 @@ NSMutableArray *history;
             break;
             
         case TAG_IMAGE_INFO:
-            [self currentImageInfo];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ImageInformation" object:nil];
             break;
             
         default:
@@ -562,8 +584,13 @@ NSMutableArray *history;
 // - menu options for
 //      background colors
 // - user image for app, for toobar buttons
-// - image info as window, pop up
-// - move source and destination labels to pop up? or optionally overlay on image transparently
+// - image info as window,
+// - move source and destination labels to window
+// - close and reopen info window
+// - src /dest labels for info window
+// - scroll for info
+// - save pref of window open
+// - move pref from view controller to model?
 
 
 // TODO - UI

@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "SlideViewerModel.h"
+#import "ImageInfoWindowController.h"
 
 @interface ViewController()
 @property (strong) IBOutlet NSTextField *sourcePath;
@@ -24,6 +25,7 @@
 
 
 SlideViewerModel *model;
+ImageInfoWindowController *imageInfoWindowController;
 
 
 - (void)viewDidLoad {
@@ -56,6 +58,7 @@ SlideViewerModel *model;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleModelNotification:) name:@"UpdatePlayIntervalTag" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleModelNotification:) name:@"UpdateCopyTypeTag" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleModelNotification:) name:@"UpdateDateByTag" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleModelNotification:) name:@"ImageInformation" object:nil];
     
     model = [[SlideViewerModel alloc] init];
     self.sourcePath.stringValue = model.sourceTopPath;
@@ -65,15 +68,24 @@ SlideViewerModel *model;
     [self setSelectedInMenuRange: model.dateByTag tagStart:TAG_DATEBY_START tagEnd:TAG_DATEBY_END];
 }
 
+- (void) updateImageInfoWindow {
+    if (imageInfoWindowController != nil) {
+        imageInfoWindowController.sourcePath.stringValue = model.sourcePath;
+        imageInfoWindowController.destinationPath.stringValue = model.destinationTopPath;
+        [imageInfoWindowController.imageInformation setString: [model getCurrentImageInfo]];
+    }
+}
+
 -(void)handleModelNotification:(NSNotification *)pNotification
 {
-    NSLog(@"%@", [pNotification name]);
+    //NSLog(@"handleModelNotification: %@", [pNotification name]);
     if ([[pNotification name] isEqualToString:@"UpdateSourceLabel"]) {
         self.sourcePath.stringValue = (NSString *)[pNotification object];
+        [self updateImageInfoWindow];
     }
-    else if ([[pNotification name] isEqualToString:@"UpdateDestinationLabel"]) {
-        self.destinationPath.stringValue = (NSString *)[pNotification object];
-    }
+//    else if ([[pNotification name] isEqualToString:@"UpdateDestinationLabel"]) {
+//        self.destinationPath.stringValue = model.destinationTopPath;
+//    }
     else if ([[pNotification name] isEqualToString:@"UpdateImage"]) {
         NSString *name = (NSString *)[pNotification object];
         NSImage *image = [[NSImage alloc] initWithContentsOfFile:name];
@@ -87,6 +99,13 @@ SlideViewerModel *model;
     }
     else if ([[pNotification name] isEqualToString:@"UpdateDateByTag"]) {
         [self setSelectedInMenuRange: model.dateByTag tagStart:TAG_DATEBY_START tagEnd:TAG_DATEBY_END];
+    }
+    else if ([[pNotification name] isEqualToString:@"ImageInformation"]) {
+        if (imageInfoWindowController == nil) {
+            imageInfoWindowController = [[ImageInfoWindowController alloc] initWithWindowNibName:@"ImageInfoWindowController"];
+            [imageInfoWindowController showWindow:self];
+        }
+        [self updateImageInfoWindow];
     }
 }
 
@@ -110,6 +129,7 @@ SlideViewerModel *model;
     NSAlert *alert = [[NSAlert alloc] init];
     [alert setMessageText:@"Under Construction."];
     [alert runModal];
+    
 }
 
 - (IBAction)toolbarAction:(id)sender {

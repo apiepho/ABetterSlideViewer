@@ -46,11 +46,13 @@ static const NSInteger TAG_IMAGE_INFO          = 51;
 
 @property (copy, readwrite) NSString *destinationTopPath;
 @property (copy, readwrite) NSString *sourceTopPath;
+@property (copy, readonly) NSString *sourcePath;
 @property (readonly) NSInteger playIntervalTag;
 @property (readonly) NSInteger copyTypeTag;
 @property (readonly) NSInteger dateByTag;
 
 - (void) loadPaths;
+- (NSString *) getCurrentImageInfo;
 - (void)handleAction:(NSInteger)tag;
 
 @end
