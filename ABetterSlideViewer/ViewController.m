@@ -618,10 +618,15 @@ NSMutableArray *history;
     }
     NSLog(@"%@", exif);
     // example of parsing exif dictionary
-    // using photo frm Lumina 928, the values are reversed
     float latitude = [[[exif objectForKey:@"{GPS}"] valueForKey:@"Latitude"] floatValue];
     float longitude = [[[exif objectForKey:@"{GPS}"] valueForKey:@"Longitude"] floatValue];
-    NSLog(@"GPS Longitude, Latitude:  %f, %f", longitude, latitude);
+    NSString *latitudeRef = [[exif objectForKey:@"{GPS}"] valueForKey:@"LatitudeRef"];
+    NSString *longitudeRef = [[exif objectForKey:@"{GPS}"] valueForKey:@"LongitudeRef"];
+    if ([latitudeRef isEqualToString:@"S"])
+        latitude *= -1;
+    if ([longitudeRef isEqualToString:@"W"])
+        longitude *= -1;
+    NSLog(@"GPS Latitude, Longitude:  %f, %f", latitude, longitude);
 
 }
 
@@ -708,6 +713,10 @@ NSMutableArray *history;
 //      add option to enter folder date pattern
 // - implement date by
 // - refactor copy type
+// - user image for app, for toobar buttons
+// - image info as window, pop up
+// - move source and destination labels to pop up? or optionally overlay on image transparently
+
 
 // TODO - UI
 // - fix first responder for toolbar and menubar someday
@@ -720,6 +729,8 @@ NSMutableArray *history;
 
 // - installer
 // - sign app
+
+// pay for private github
 
 
 
