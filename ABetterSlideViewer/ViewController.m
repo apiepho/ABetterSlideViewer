@@ -26,14 +26,11 @@ SlideViewerModel *model;
 ImageInfoWindowController *imageInfoWindowController;
 
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     // Do any additional setup after loading the view.
-    
-    // DEBUG: Use this to clear User defaults for program
-    //NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-    //[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
     
     // Set text and all background colors
     [self.view setWantsLayer: YES];
@@ -55,11 +52,24 @@ ImageInfoWindowController *imageInfoWindowController;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleModelNotification:) name:@"UpdateCopyTypeTag" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleModelNotification:) name:@"UpdateDateByTag" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleModelNotification:) name:@"ImageInformation" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleModelNotification:) name:@"ImageInformationClosed" object:nil];
     
     model = [[SlideViewerModel alloc] init];
+    [model finishInit];
     [self setSelectedInMenuRange: model.playIntervalTag tagStart:TAG_PLAYINTERVAL_START tagEnd:TAG_PLAYINTERVAL_END];
     [self setSelectedInMenuRange: model.copyTypeTag tagStart:TAG_COPYTYPE_START tagEnd:TAG_COPYTYPE_END];
     [self setSelectedInMenuRange: model.dateByTag tagStart:TAG_DATEBY_START tagEnd:TAG_DATEBY_END];
+}
+
+- (void) viewWillDisappear {
+    if (imageInfoWindowController != nil) {
+        [imageInfoWindowController.window orderOut:nil];
+        imageInfoWindowController = nil;
+    }
+    [model savePreferences];
+    [super viewWillDisappear];
+    // close the app
+    [[NSApplication sharedApplication] terminate:self];
 }
 
 - (void) updateImageInfoWindow {
@@ -76,9 +86,6 @@ ImageInfoWindowController *imageInfoWindowController;
     if ([[pNotification name] isEqualToString:@"UpdateSourceLabel"]) {
         [self updateImageInfoWindow];
     }
-//    else if ([[pNotification name] isEqualToString:@"UpdateDestinationLabel"]) {
-//        self.destinationPath.stringValue = model.destinationTopPath;
-//    }
     else if ([[pNotification name] isEqualToString:@"UpdateImage"]) {
         NSString *name = (NSString *)[pNotification object];
         NSImage *image = [[NSImage alloc] initWithContentsOfFile:name];
@@ -94,11 +101,16 @@ ImageInfoWindowController *imageInfoWindowController;
         [self setSelectedInMenuRange: model.dateByTag tagStart:TAG_DATEBY_START tagEnd:TAG_DATEBY_END];
     }
     else if ([[pNotification name] isEqualToString:@"ImageInformation"]) {
+        model.imageInfoOpen = true;
         if (imageInfoWindowController == nil) {
             imageInfoWindowController = [[ImageInfoWindowController alloc] initWithWindowNibName:@"ImageInfoWindowController"];
             [imageInfoWindowController showWindow:self];
         }
         [self updateImageInfoWindow];
+    }
+    else if ([[pNotification name] isEqualToString:@"ImageInformationClosed"]) {
+        model.imageInfoOpen = false;
+        imageInfoWindowController = nil;
     }
 }
 
@@ -167,11 +179,7 @@ ImageInfoWindowController *imageInfoWindowController;
         if (result == NSFileHandlingPanelOKButton) {
             NSURL *selection = panel.URLs[0];
             model.sourceTopPath = [selection.path stringByResolvingSymlinksInPath];
-            //NSLog(@"soure TOP path: %@", sourceTopPath);
-         
-            // TODO: move setting pref into model
-            NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-            [prefs setObject:model.sourceTopPath forKey:@"keyForSourceTopPath"];
+            [model savePreferences];
             [model loadPaths];
         }
     }];
@@ -188,11 +196,7 @@ ImageInfoWindowController *imageInfoWindowController;
         if (result == NSFileHandlingPanelOKButton) {
             NSURL *selection = [panel URL];
             model.destinationTopPath = [selection.path stringByResolvingSymlinksInPath];
-            //NSLog(@"destination TOP path: %@", destinationTopPath);
-            
-            // TODO: move setting pref into model
-            NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-            [prefs setObject:model.destinationTopPath forKey:@"keyForDestinationTopPath"];
+            [model savePreferences];
         }
     }];
 }

@@ -22,51 +22,99 @@ NSMutableArray *history;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        // Get user preferences for source and destination
-        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-        NSString *keyValue;
-        keyValue = [prefs stringForKey:@"keyForSourceTopPath"];
-        if (keyValue != nil) {
-            _sourceTopPath = keyValue;
-            [self loadPaths];
-        }
-        keyValue = [prefs stringForKey:@"keyForDestinationTopPath"];
-        if (keyValue != nil) {
-            _destinationTopPath = keyValue;
-        }
-        
-        // Set default play interval
-        playInterval = PLAY_INTERVAL_2S;
-        _playIntervalTag = TAG_PLAYINTERVAL_2S;
-        // Get user preferences for play interval
-        keyValue = [prefs stringForKey:@"keyForPlayInterval"];
-        if (keyValue != nil) {
-            playInterval = [keyValue floatValue];
-        }
-        keyValue = [prefs stringForKey:@"keyForPlayIntervalTag"];
-        if (keyValue != nil) {
-            _playIntervalTag = [keyValue integerValue];
-        }
-        
-        // Set default copy type
-        _copyTypeTag = TAG_COPYTYPE_MIRROR;
-        // Get user preferences for copy type
-        keyValue = [prefs stringForKey:@"keyForCopyTypeTag"];
-        if (keyValue != nil) {
-            _copyTypeTag = [keyValue intValue];
-        }
-        
-        // Set default date by
-        _dateByTag = TAG_DATEBY_FOLDER;
-        // Get user preferences for date by
-        keyValue = [prefs stringForKey:@"keyForDateByTag"];
-        if (keyValue != nil) {
-            _dateByTag = [keyValue intValue];
-        }
-        
+        [self loadPreferences];
         history = [[NSMutableArray alloc] init];
     }
     return self;
+}
+
+- (void) loadPreferences {
+    // DEBUG: Use this to clear User defaults for program
+    //NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    //[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+
+    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSString *keyValue;
+    keyValue = [prefs stringForKey:@"keyForSourceTopPath"];
+    if (keyValue != nil) {
+        _sourceTopPath = keyValue;
+        [self loadPaths];
+    }
+    keyValue = [prefs stringForKey:@"keyForDestinationTopPath"];
+    if (keyValue != nil) {
+        _destinationTopPath = keyValue;
+    }
+    
+    // Set default play interval
+    playInterval = PLAY_INTERVAL_2S;
+    _playIntervalTag = TAG_PLAYINTERVAL_2S;
+    // Get user preferences for play interval
+    keyValue = [prefs stringForKey:@"keyForPlayInterval"];
+    if (keyValue != nil) {
+        playInterval = [keyValue floatValue];
+    }
+    keyValue = [prefs stringForKey:@"keyForPlayIntervalTag"];
+    if (keyValue != nil) {
+        _playIntervalTag = [keyValue integerValue];
+    }
+    keyValue = [prefs stringForKey:@"keyForPlaying"];
+    if (keyValue != nil) {
+        playRunning = [keyValue boolValue];
+        [self play];
+    }
+    
+    // Set default copy type
+    _copyTypeTag = TAG_COPYTYPE_MIRROR;
+    // Get user preferences for copy type
+    keyValue = [prefs stringForKey:@"keyForCopyTypeTag"];
+    if (keyValue != nil) {
+        _copyTypeTag = [keyValue intValue];
+    }
+    
+    // Set default date by
+    _dateByTag = TAG_DATEBY_FOLDER;
+    // Get user preferences for date by
+    keyValue = [prefs stringForKey:@"keyForDateByTag"];
+    if (keyValue != nil) {
+        _dateByTag = [keyValue intValue];
+    }
+
+    _imageInfoOpen = true;
+    keyValue = [prefs stringForKey:@"keyForImageInfoOpen"];
+    if (keyValue != nil) {
+        _imageInfoOpen = [keyValue boolValue];
+    }
+}
+
+- (void) savePreferences {
+    NSString *str;
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+
+    [prefs setObject:self.sourceTopPath forKey:@"keyForSourceTopPath"];
+    [prefs setObject:self.destinationTopPath forKey:@"keyForDestinationTopPath"];
+
+    str = [NSString stringWithFormat:@"%f", playInterval];
+    [prefs setObject:str forKey:@"keyForPlayInterval"];
+    str = [NSString stringWithFormat:@"%ld", _playIntervalTag];
+    [prefs setObject:str forKey:@"keyForPlayIntervalTag"];
+    str = [NSString stringWithFormat:@"%d", playRunning];
+    [prefs setObject:str forKey:@"keyForPlaying"];
+    str = [NSString stringWithFormat:@"%ld", _copyTypeTag];
+    [prefs setObject:str forKey:@"keyForCopyTypeTag"];
+    str = [NSString stringWithFormat:@"%ld", _dateByTag];
+    [prefs setObject:str forKey:@"keyForDateByTag"];
+    str = [NSString stringWithFormat:@"%d", _imageInfoOpen];
+    [prefs setObject:str forKey:@"keyForImageInfoOpen"];
+}
+
+- (void) finishInit {
+    // some things need to be initialized after model is created in parent view controller
+
+    // start with image info open
+    if (_imageInfoOpen) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ImageInformation" object:nil];
+    }
 }
 
 - (void) loadPaths {
@@ -407,6 +455,7 @@ NSMutableArray *history;
 }
 
 - (void) setPlayInterval:(NSInteger) tag {
+    _playIntervalTag = tag;
     [self pause];
     switch (tag) {
         case TAG_PLAYINTERVAL_2S:
@@ -425,70 +474,21 @@ NSMutableArray *history;
             break;
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdatePlayIntervalTag" object:nil];
-    
-    NSString *str;
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    str = [NSString stringWithFormat:@"%f", playInterval];
-    [prefs setObject:str forKey:@"keyForPlayInterval"];
-    str = [NSString stringWithFormat:@"%ld", tag];
-    [prefs setObject:str forKey:@"keyForPlayIntervalTag"];
-    
+    [self savePreferences];
     [self play];
 }
 
 - (void) setCopyTypeTag:(NSInteger) tag {
     _copyTypeTag = tag;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateCopyTypeTag" object:nil];
-   
-    NSString *str;
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    str = [NSString stringWithFormat:@"%ld", tag];
-    [prefs setObject:str forKey:@"keyForCopyTypeTag"];
+    [self savePreferences];
 }
 
 - (void) setDateByTag:(NSInteger) tag {
     _dateByTag = tag;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateDateByTag" object:nil];
-    
-    NSString *str;
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    str = [NSString stringWithFormat:@"%ld", tag];
-    [prefs setObject:str forKey:@"keyForDateByTag"];
+    [self savePreferences];
 }
-
-
-//- (void) currentImageInfo {
-//    // TODO create image info window that can be reused for each image
-//    NSDictionary* exif = nil;
-//    NSURL* url = [NSURL fileURLWithPath: sourcePaths[currentIndex]];
-//    
-//    // get handle
-//    CGImageSourceRef source = CGImageSourceCreateWithURL ( (__bridge CFURLRef) url, NULL);
-//    if (source) {
-//        // get image properties
-//        CFDictionaryRef metadata = CGImageSourceCopyPropertiesAtIndex(source, 0, NULL);
-//        if (metadata) {
-//            // cast to NSDictionary
-//            exif = [NSDictionary dictionaryWithDictionary : (__bridge NSDictionary *)metadata];
-//            CFRelease (metadata);
-//        }
-//        CFRelease(source);
-//        source = nil;
-//    }
-//    NSLog(@"%@", exif);
-//    // example of parsing exif dictionary
-//    float latitude = [[[exif objectForKey:@"{GPS}"] valueForKey:@"Latitude"] floatValue];
-//    float longitude = [[[exif objectForKey:@"{GPS}"] valueForKey:@"Longitude"] floatValue];
-//    NSString *latitudeRef = [[exif objectForKey:@"{GPS}"] valueForKey:@"LatitudeRef"];
-//    NSString *longitudeRef = [[exif objectForKey:@"{GPS}"] valueForKey:@"LongitudeRef"];
-//    if ([latitudeRef isEqualToString:@"S"])
-//        latitude *= -1;
-//    if ([longitudeRef isEqualToString:@"W"])
-//        longitude *= -1;
-//    NSLog(@"GPS Latitude, Longitude:  %f, %f", latitude, longitude);
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"ImageInformation" object:nil];
-//    
-//}
 
 - (NSString *) getCurrentImageInfo {
     NSString *result;
@@ -579,24 +579,3 @@ NSMutableArray *history;
 
 @end
 
-
-// TODO - FEATURES
-// - menu options for
-//      background colors
-// - user image for app, for toobar buttons
-// - close and reopen info window
-// - src /dest labels for info window
-// - save pref of window open
-// - move pref from view controller to model?
-
-
-// TODO - UI
-// - fix first responder for toolbar and menubar someday
-// - black behind image
-// - better images for toolbar buttons
-// - image for app
-
-// - installer
-// - sign app
-
-// pay for private github

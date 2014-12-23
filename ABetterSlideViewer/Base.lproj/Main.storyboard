@@ -231,7 +231,7 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="0.0"/>
+            <point key="canvasLocation" x="75.5" y="-92"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -242,7 +242,7 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <toolbar key="toolbar" implicitIdentifier="3F2F6FE9-1A79-4D27-96F8-8900C414903D" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="small" id="3W7-9T-5Ua">
+                        <toolbar key="toolbar" implicitIdentifier="3F2F6FE9-1A79-4D27-96F8-8900C414903D" displayMode="iconAndLabel" sizeMode="small" id="3W7-9T-5Ua">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="gPk-T2-cqk"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="Lbv-OL-lbQ"/>
@@ -332,7 +332,7 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="90" y="243"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">

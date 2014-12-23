@@ -50,7 +50,12 @@ static const NSInteger TAG_IMAGE_INFO          = 51;
 @property (readonly) NSInteger playIntervalTag;
 @property (readonly) NSInteger copyTypeTag;
 @property (readonly) NSInteger dateByTag;
+@property (readwrite) bool imageInfoOpen;
 
+
+- (void) finishInit;
+- (void) loadPreferences;
+- (void) savePreferences;
 - (void) loadPaths;
 - (NSString *) getCurrentImageInfo;
 - (void)handleAction:(NSInteger)tag;

@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ViewController : NSViewController
+@interface ViewController : NSViewController<NSWindowDelegate>
 
 - (IBAction)toolbarAction:(id)sender;
 - (IBAction) menuItemAction:(id)sender;

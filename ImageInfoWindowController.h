@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ImageInfoWindowController : NSWindowController
+@interface ImageInfoWindowController : NSWindowController<NSWindowDelegate>
 @property (strong) IBOutlet NSTextField *sourcePath;
 @property (strong) IBOutlet NSTextField *destinationPath;
 @property (strong) IBOutlet NSTextView *imageInformation;

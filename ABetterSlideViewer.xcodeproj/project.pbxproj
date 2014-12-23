@@ -16,6 +16,7 @@
 		61B4D6821A485EC90031B066 /* SlideViewerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B4D6811A485EC90031B066 /* SlideViewerModel.m */; };
 		61B4D68D1A48BBFF0031B066 /* ImageInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B4D68B1A48BBFF0031B066 /* ImageInfoWindowController.m */; };
 		61B4D68E1A48BBFF0031B066 /* ImageInfoWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B4D68C1A48BBFF0031B066 /* ImageInfoWindowController.xib */; };
+		61B4D6901A4A0D200031B066 /* TODO.txt in Resources */ = {isa = PBXBuildFile; fileRef = 61B4D68F1A4A0D200031B066 /* TODO.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		61B4D68A1A48BBFF0031B066 /* ImageInfoWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageInfoWindowController.h; sourceTree = "<group>"; };
 		61B4D68B1A48BBFF0031B066 /* ImageInfoWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageInfoWindowController.m; sourceTree = "<group>"; };
 		61B4D68C1A48BBFF0031B066 /* ImageInfoWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageInfoWindowController.xib; sourceTree = "<group>"; };
+		61B4D68F1A4A0D200031B066 /* TODO.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 				61B4D6371A3493CE0031B066 /* Main.storyboard */,
 				61B4D62B1A3493CE0031B066 /* Supporting Files */,
 				61B4D6871A48B9C40031B066 /* ImageInfoViewController.h */,
+				61B4D68F1A4A0D200031B066 /* TODO.txt */,
 			);
 			path = ABetterSlideViewer;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61B4D6901A4A0D200031B066 /* TODO.txt in Resources */,
 				61B4D68E1A48BBFF0031B066 /* ImageInfoWindowController.xib in Resources */,
 				61B4D6361A3493CE0031B066 /* Images.xcassets in Resources */,
 				61B4D6391A3493CE0031B066 /* Main.storyboard in Resources */,
