@@ -77,6 +77,8 @@ ImageInfoWindowController *imageInfoWindowController;
         imageInfoWindowController.sourcePath.stringValue = model.sourcePath;
         imageInfoWindowController.destinationPath.stringValue = model.destinationTopPath;
         [imageInfoWindowController.imageInformation setString: [model getCurrentImageInfo]];
+        [imageInfoWindowController.imageInformation scrollRangeToVisible:NSMakeRange([[imageInfoWindowController.imageInformation string] length], 0)];
+
     }
 }
 
