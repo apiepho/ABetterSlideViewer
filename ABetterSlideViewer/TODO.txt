@@ -7,11 +7,10 @@
 
 // TODO - UI
 // - fix first responder for toolbar and menubar someday
-// - black behind image
 // - better images for toolbar buttons
 // - image for app
 
 // - installer
 // - sign app
 
-// pay for private github
+// pay for private github?
